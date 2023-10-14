@@ -222,8 +222,6 @@ void sortAlgorithms::radixSort()
 
     for(int i = 1; i < dataNum; i++)
     {
-        emit showSBMsg(2, QString("访问下标%1").arg(i));
-        emit showSBMsg(3, QString("找出整个数组的最大元素"));
 
         if(stop) return;
 
@@ -249,7 +247,6 @@ void sortAlgorithms::radixSort()
         maximum /= 10;
     }
 
-    emit showSBMsg(4, QString("最大元素位数为%1").arg(digits));
 
     // 根据最低有效数字排列
     for(int i = 0; i < digits; i++)
@@ -274,8 +271,6 @@ void sortAlgorithms::radixSort()
             pauseLock.unlock();
             cmpCnt++;                   // 算访问次数，虽然没有比较，但读取了这个数
             emit compareColumn(j, j);        // 用天蓝色指示当前所在位置
-            emit showSBMsg(2, QString("排序第%1位 访问下标%2").arg(i+1).arg(j));
-            emit showSBMsg(3, QString("按位数字大小统计个数，随后放入辅助数组"));
             msleep(speed);
         }
 
@@ -310,8 +305,6 @@ void sortAlgorithms::radixSort()
             pauseLock.lock();
             pauseLock.unlock();
             oprtCnt++;                       // 算访问次数，虽然没有比较，但读取了这个数
-            emit showSBMsg(2, QString("排序第%1位 更新下标%2").arg(i+1).arg(j));
-            emit showSBMsg(3, QString("用辅助数组更新原数组"));
             emit updtColumn(j, true, numbers);  // 指示当前所在位置
             msleep(speed);
         }
@@ -331,7 +324,6 @@ void sortAlgorithms::quickSort(int left, int right)
     base = numbers[left];     // 第一个值设为基准
     if(oneStep) {emit baseColumn(left); msleep(speed); }
 
-    emit showSBMsg(4, QString("排序区间[%1, %2]，base：%3").arg(left).arg(right).arg(left));
 
     while(i < j)
     {
@@ -339,7 +331,6 @@ void sortAlgorithms::quickSort(int left, int right)
         pauseLock.lock();           // 每个代码段都需要这两句保证暂停按钮/单步执行时暂停生效
         pauseLock.unlock();
 
-        emit showSBMsg(2, QString("i = %1, j = %2 相遇后本轮结束").arg(i).arg(j));
         if(oneStep) {emit baseColumn(left); msleep(speed); resumeSorting(); }    // 防止新进入循环时基准颜色被覆盖
 
         while(numbers[j] >= base && i < j)  // 先j后i，保证一轮之后基准值左侧都是小于基准值的数，先i后j不能保证
@@ -348,8 +339,6 @@ void sortAlgorithms::quickSort(int left, int right)
             cmpCnt++;                 // 只统计元素数值比较次数，不统计指针i j自身的大小比较次数
             pauseLock.lock();
             pauseLock.unlock();
-            emit showSBMsg(2, QString("i = %1, j = %2 相遇后本轮结束").arg(i).arg(j));
-            emit showSBMsg(3, QString("移动 j 指针与base比较，找<base的位置"));
             if(oneStep){emit baseColumn(left); emit compareColumn(i, j); if(i != left){ emit baseColumn(left);resumeSorting();} msleep(speed);}
         }
         while(numbers[i] <= base && i < j)
@@ -358,8 +347,6 @@ void sortAlgorithms::quickSort(int left, int right)
             cmpCnt++;
             pauseLock.lock();
             pauseLock.unlock();
-            emit showSBMsg(2, QString("i = %1, j = %2 相遇后本轮结束").arg(i).arg(j));
-            emit showSBMsg(3, QString("移动 i 指针与base比较，找>base的位置"));
             if(oneStep){emit baseColumn(left); emit compareColumn(i, j); if(i != left){ emit baseColumn(left);resumeSorting();}  msleep(speed);}
         }
 
@@ -369,8 +356,6 @@ void sortAlgorithms::quickSort(int left, int right)
             pauseLock.lock();
             pauseLock.unlock();
             qDebug() << "swap " << i << " " << j << endl;
-            emit showSBMsg(2, QString("交换：%1 %2").arg(i).arg(j));
-            emit showSBMsg(3, QString("交换指针，使最终base左侧小于base，右侧大于base"));
             emit swapColumn(i,j,numbers);
             emit baseColumn(left);
             resumeSorting();
@@ -382,9 +367,6 @@ void sortAlgorithms::quickSort(int left, int right)
     numbers[i] = base;
     oprtCnt++;
     emit swapColumn(left, i, numbers);    // 交换位于首位的基准值和指针相遇位置
-    emit showSBMsg(2, QString("交换：%1 %2").arg(left).arg(i));
-    emit showSBMsg(3, QString("交换基准值和指针相遇位置"));
-    emit showSBMsg(4, QString("排序区间[%1, %2]，base：%3").arg(left).arg(right).arg(i));
     msleep(speed);
 
     quickSort(left, i - 1);
@@ -407,7 +389,6 @@ void sortAlgorithms::mergeSort(int left, int right)
 // 归并排序_合并函数
 void sortAlgorithms::merge(int left, int mid, int right)
 {
-    emit showSBMsg(4, QString("排序区间[%1, %2]，mid：%3").arg(left).arg(right).arg(mid));
 
     int* temp = new int[right - left + 1];  //用 new 申请一个辅助函数
     int i = left, j = mid + 1, k = 0;    // k为 temp 数组的下标
@@ -420,8 +401,6 @@ void sortAlgorithms::merge(int left, int mid, int right)
         cmpCnt++;
         emit compareColumn(i,j);
         if(oneStep) emit baseColumn(mid);   // 只有单步执行时显示mid值，否则太乱
-        emit showSBMsg(2, QString("比较：i = %1, j = %2").arg(i).arg(j));
-        emit showSBMsg(3, QString("较小值存入辅助数组"));
         msleep(speed);
 
         if (numbers[i] <= numbers[j])
@@ -443,8 +422,7 @@ void sortAlgorithms::merge(int left, int mid, int right)
         pauseLock.unlock();
         if(oneStep) emit baseColumn(mid);
         emit compareColumn(i,j);    // 此处不算排序数据的比较操作，只循环下标比较。只更新当前柱子的颜色，用于指示。不统计比较次数
-        emit showSBMsg(2, QString("i = %1, j = %2").arg(i).arg(j));
-        emit showSBMsg(3, QString("j 序列结束，检查剩余 i 序列是否全部存入辅助数组"));
+
         msleep(speed);
 
         temp[k++] = numbers[i++];
@@ -457,8 +435,6 @@ void sortAlgorithms::merge(int left, int mid, int right)
         pauseLock.unlock();
         if(oneStep) emit baseColumn(mid);
         emit compareColumn(i,j);    // 此处不算排序数据的比较操作，只循环下标比较。只更新当前柱子的颜色，用于指示。不统计比较次数
-        emit showSBMsg(2, QString("i = %1, j = %2").arg(i).arg(j));
-        emit showSBMsg(3, QString("i 序列结束，检查剩余 j 序列是否全部存入辅助数组"));
         msleep(speed);
 
         temp[k++] = numbers[j++];
@@ -476,8 +452,6 @@ void sortAlgorithms::merge(int left, int mid, int right)
         oprtCnt++;
 
         emit updtColumn(i, true, numbers);
-        emit showSBMsg(2, QString("更新下标 %1").arg(i));
-        emit showSBMsg(3, QString("用辅助数组更新原数组"));
         msleep(speed);
 
     }
@@ -508,9 +482,6 @@ void sortAlgorithms::heapSort()
         oprtCnt++;
         pauseLock.lock();
         pauseLock.unlock();
-        emit showSBMsg(4, QString("建堆结束"));
-        emit showSBMsg(2, QString("交换：%1 %2").arg(0).arg(i));
-        emit showSBMsg(3, QString("大根堆建立结束，弹出堆顶元素放到最后"));
         emit swapColumn(0, i, numbers);
         msleep(speed);
         pauseLock.lock();       //此处不加互斥量会导致状态栏标签4不能显示“建堆结束”，一闪而过显示下面函数中设置的内容
@@ -525,7 +496,6 @@ void sortAlgorithms::max_heapify(int start, int end)    //此函数是判断大�
     int fa = start;            // 获取父节点的下标
     int son = fa * 2 + 1;      // 左节点，因为下标0开始所以需要+1
 
-    emit showSBMsg(4, QString("建立[%1,%2]上的大根堆").arg(start).arg(end));
 
     while (son <= end)          // 判断若无子节点直接退出
     {
@@ -537,8 +507,6 @@ void sortAlgorithms::max_heapify(int start, int end)    //此函数是判断大�
             pauseLock.unlock();
             cmpCnt++;
             emit compareColumn(son, son+1);
-            emit showSBMsg(2, QString("比较：son1 = %1, son2 = %2").arg(son).arg(son+1));
-            emit showSBMsg(3, QString("比较两个子节点大小"));
             msleep(speed);
 
             son++;      //指向右节点
@@ -548,8 +516,6 @@ void sortAlgorithms::max_heapify(int start, int end)    //此函数是判断大�
         pauseLock.unlock();
         cmpCnt++;
         emit compareColumn(son, fa);   // 指示下面的比较
-        emit showSBMsg(2, QString("比较：fa = %1, son = %2").arg(fa).arg(son));
-        emit showSBMsg(3, QString("比较子节点和父节点，父节点大则建堆完毕"));
         msleep(speed);
 
         if (numbers[fa] > numbers[son]) //如果父节点大于子节点代表调整完毕，直接跳出函数
@@ -559,8 +525,6 @@ void sortAlgorithms::max_heapify(int start, int end)    //此函数是判断大�
             pauseLock.lock();
             pauseLock.unlock();
 
-            emit showSBMsg(2, QString("交换：fa = %1, son = %2").arg(fa).arg(son));
-            emit showSBMsg(3, QString("子节点更大，交换后重复比较操作"));
 
             swap(fa, son);
             emit swapColumn(fa, son, numbers);
@@ -569,7 +533,7 @@ void sortAlgorithms::max_heapify(int start, int end)    //此函数是判断大�
             son = son * 2 + 1;  // 子节点指向孙节点 ，即这个点还需要跟孙节点比较
 
             oprtCnt++;
-            emit showSBMsg(4, QString("建立[%1,%2]上的大根堆").arg(start).arg(end)); // 更新建堆信息（下一循环的过程）
+
             msleep(speed);
         }
     }
@@ -585,7 +549,6 @@ void sortAlgorithms::shellSort()
     {
         if(stop) return;
 
-        emit showSBMsg(4, QString("gap = %1").arg(gap));
         pauseLock.lock();
         pauseLock.unlock();
         for(i = gap; i < dataNum; i++)
@@ -595,8 +558,6 @@ void sortAlgorithms::shellSort()
             pauseLock.lock();
             pauseLock.unlock();
             cmpCnt++;
-            emit showSBMsg(2, QString("比较：i = %1, j = %2").arg(i).arg(i-gap));
-            emit showSBMsg(3, QString("判断当前数是否需要移动"));
             emit compareColumn(i, i-gap);
             msleep(speed);
 
@@ -613,8 +574,6 @@ void sortAlgorithms::shellSort()
                         pauseLock.lock();
                         pauseLock.unlock();
                         cmpCnt++;
-                        emit showSBMsg(2, QString("比较：i = %1, j = %2").arg(i).arg(j));
-                        emit showSBMsg(3, QString("寻找同组中 i 可以移动的最前位置"));
                         emit compareColumn(i, j);
                         msleep(speed);
                     }
@@ -624,13 +583,9 @@ void sortAlgorithms::shellSort()
                     pauseLock.unlock();
                     oprtCnt++; 
                     emit compareColumn(j, j+gap);       //仅用于指示变量，无比较意义
-                    emit showSBMsg(2, QString("比较：i = %1, j = %2").arg(i).arg(j));
-                    emit showSBMsg(3, QString("寻找同组中 i 可以移动的最前位置"));
                     pauseLock.lock();
                     pauseLock.unlock();
                     emit updtColumn(j+gap, false, numbers); // 更新一个值且不覆盖上次的颜色，视觉上是同组蓝色比较后同组都是红色更新值，不会一次只显示一个
-                    emit showSBMsg(2, QString("移动：%1 -> %2").arg(j).arg(j+gap));
-                    emit showSBMsg(3, QString("类似冒泡，移动中间变量，给 i 让出空间"));
                     msleep(speed);
                 }
                 numbers[j + gap] = temp;    // 原来的i移动到合适的位置
@@ -638,8 +593,6 @@ void sortAlgorithms::shellSort()
                 oprtCnt++;
                 pauseLock.lock();
                 pauseLock.unlock();
-                emit showSBMsg(2, QString("移动：%1 -> %2").arg(i).arg(j+gap));
-                emit showSBMsg(3, QString("移动 i 到同组中满足条件的最靠前位置"));
                 emit compareColumn(i, j+gap);       //仅用于指示变量，无比较意义
                 emit updtColumn(j+gap, true, numbers);
                 msleep(speed);
@@ -661,9 +614,6 @@ void sortAlgorithms::insertSort()
         pauseLock.lock();
         pauseLock.unlock();
         emit baseColumn(i);
-        emit showSBMsg(2, QString("更新待插入元素 %1 -> %2 ").arg(j).arg(j+1));
-        emit showSBMsg(3, QString("寻找合适位置，将待插入元素插入到有序序列中"));
-        emit showSBMsg(4, QString("当前待插入：i = %1").arg(i));
         msleep(speed);
 
         while(j >= 0 && numbers[j] > key)
@@ -673,7 +623,6 @@ void sortAlgorithms::insertSort()
             pauseLock.lock();
             pauseLock.unlock();
             cmpCnt++;
-            emit showSBMsg(2, QString("比较：j = %1, i = %2").arg(j).arg(i));
             emit compareColumn(i, j);
             emit baseColumn(i);
             msleep(speed);
@@ -682,7 +631,6 @@ void sortAlgorithms::insertSort()
 
             oprtCnt++;
             emit updtColumn(j+1, true, numbers);
-            emit showSBMsg(2, QString("j = %1 后移1位").arg(j));
             emit compareColumn(i, j);       // 避免颜色被覆盖，下同
             emit baseColumn(i);
             msleep(speed);
@@ -694,7 +642,6 @@ void sortAlgorithms::insertSort()
 
         oprtCnt++;
         emit updtColumn(j+1, true, numbers);
-        emit showSBMsg(2, QString("已找到合适位置，插入 i "));
         msleep(speed);
 
     }
@@ -743,7 +690,6 @@ void sortAlgorithms::selectSort()
 
         pauseLock.lock();
         pauseLock.unlock();
-        emit showSBMsg(4, QString("第 %1 轮").arg(i+1));
         emit baseColumn(min_flag); // 指示最小值
         msleep(speed);
 
@@ -758,8 +704,6 @@ void sortAlgorithms::selectSort()
             }
 
             cmpCnt++;       // 下面j与最小值比较
-            emit showSBMsg(2, QString("比较：j = %1, min_pos = %2 ").arg(j).arg(min_flag));
-            emit showSBMsg(3, QString("查找无序序列中最小值"));
             emit compareColumn(min_flag, j);    // 指示j和当前最小值比较过程
             emit baseColumn(min_flag);          // 防止最小值颜色被覆盖
             msleep(speed);
@@ -771,8 +715,6 @@ void sortAlgorithms::selectSort()
 
                 pauseLock.lock();           // 单步执行时找到新的最小值为一步
                 pauseLock.unlock();
-                emit showSBMsg(2, QString("更新：min_pos = %1 ").arg(min_flag));
-                emit showSBMsg(3, QString("找到更小的值，更新min_pos"));
                 emit baseColumn(min_flag);  // 指示新的最小值
                 msleep(speed);
             }
@@ -783,8 +725,6 @@ void sortAlgorithms::selectSort()
         oprtCnt++;
         pauseLock.lock();
         pauseLock.unlock();
-        emit showSBMsg(2, QString("交换：min_pos = %1, i = %2 ").arg(min_flag).arg(i));
-        emit showSBMsg(3, QString("最小值交换到无序序列头部，有序序列长度+1"));
         emit swapColumn(i, min_flag, numbers);
         msleep(speed);
     }
