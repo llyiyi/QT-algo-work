@@ -705,7 +705,6 @@ void sortAlgorithms::bubbleSort()
 {
     for (int i = 0; i < dataNum; i++)
     {
-        emit showSBMsg(4, QString("第 %1 轮").arg(i+1));
         for (int j = 0; j < dataNum - 1 - i; j++)
         {
             if(stop) return;
@@ -718,11 +717,7 @@ void sortAlgorithms::bubbleSort()
             {
                 pauseLock.lock();
                 pauseLock.unlock();
-                emit compareColumn(j, j + 1);
-                emit baseColumn(j);     // 指示当前位置颜色
-                msleep(speed);
             }
-            emit showSBMsg(2, QString("当前下标 %1   比较%2, %3 ").arg(j).arg(j).arg(j+1));
 
             if (numbers[j] > numbers[j + 1])
             {
@@ -730,9 +725,6 @@ void sortAlgorithms::bubbleSort()
 
                 pauseLock.lock();
                 pauseLock.unlock();
-                emit swapColumn(j, j + 1, numbers);
-                emit showSBMsg(2, QString("交换：%1, %2 ").arg(j).arg(j+1));
-                msleep(speed);
             }
         }
     }

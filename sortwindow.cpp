@@ -15,6 +15,8 @@ SortWindow::SortWindow(QWidget *parent) : QMainWindow(parent),
     ui->comboBox_algo->addItem(tr("冒泡排序  O(N^2)   稳定"));   //  Index 6      O(n^2)
     ui->comboBox_algo->addItem(tr("选择排序  O(N^2)   不稳定")); //  Index 7      O(n^2)
     ui->comboBox_algo->setCurrentIndex(1);
+
+    sortCtrl = new sortAlgorithms(); // 实例化排序控制器
 }
 
 SortWindow::~SortWindow()
@@ -63,7 +65,16 @@ void SortWindow::on_pushButton_2_clicked()
         return;
     }
     qDebug() << "开始排序，排序算法：" << algorithmSelected << "；文件名：" << fileName << endl;
+    for (int i = 0; i < dataNum; i++)
+        qDebug() << numbers[i] << " ";
+    qDebug() << endl;
+    sortCtrl->setOneStepState(false);
     sortCtrl->setSortingState(true);
     sortCtrl->setAttribute(dataNum, numbers, algorithmSelected, sortSpeed);
     sortCtrl->start();
+    while (sortCtrl->isSorting())
+        ;
+    qDebug() << "排序结束" << endl;
+    for (int i = 0; i < dataNum; i++)
+        qDebug() << numbers[i] << " ";
 }
