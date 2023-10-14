@@ -40,13 +40,13 @@
      <string>开始排序</string>
     </property>
    </widget>
-   <widget class="QComboBox" name="comboBox">
+   <widget class="QComboBox" name="comboBox_algo">
     <property name="geometry">
      <rect>
       <x>240</x>
       <y>100</y>
       <width>231</width>
-      <height>21</height>
+      <height>24</height>
      </rect>
     </property>
    </widget>
