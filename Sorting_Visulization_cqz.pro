@@ -45,3 +45,5 @@ RESOURCES += \
     resource.qrc \
     style.qrc
 
+DISTFILES +=
+
