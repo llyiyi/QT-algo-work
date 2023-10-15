@@ -7,7 +7,7 @@ MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent), ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    this->setWindowTitle(QString("排序算法可视化系统"));
+    this->setWindowTitle(QString("排序算法性能比较与可视化及应用"));
     this->setWindowIcon(QIcon(":/icon.ico"));
 
     // 添加需要的字体
@@ -49,7 +49,7 @@ MainWindow::MainWindow(QWidget *parent)
     ui->statusbar->addWidget(sortDscrb);
     ui->statusbar->addWidget(keyValue);
     ui->statusbar->clearMessage();
-    sortName->setText("欢迎进入排序算法可视化程序！");
+    sortName->setText("欢迎旅行者们，请开始你的排序！");
 
     // 新建排序线程
     sortCtrl = new sortAlgorithms();
