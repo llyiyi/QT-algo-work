@@ -4,6 +4,7 @@
 #include <vector>
 #include <type_traits>
 
+//最强排序，当数组为int型采用基数排序，当数组为其他类型时采用introsort
 template <typename T>
 class Bestsort {
 public:

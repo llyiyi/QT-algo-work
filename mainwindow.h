@@ -24,9 +24,9 @@ class MainWindow : public QMainWindow
     Q_OBJECT
 
 public:
-    const int HLAYOUTWIDTH = 780; // 默认柱状图区域大小 用于计算缩放倍数
+    const int HLAYOUTWIDTH = 780;
     const int HLAYOUTHEIGHT = 410;
-    double multiWidth = 1.0; // 目前窗口宽度的缩放倍数 (窗口默认大小800x600)
+    double multiWidth = 1.0;
     double multiHigh = 1.0;
     double columnWidth;
 

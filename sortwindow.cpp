@@ -8,10 +8,8 @@ SortWindow::SortWindow(QWidget *parent) : QMainWindow(parent),
     this->setWindowTitle(QString("其他排序"));
     this->setWindowIcon(QIcon(":/icon.ico"));
 
-    // 添加需要的字体
     int fontId = QFontDatabase::addApplicationFont(QStringLiteral(":/font/hgy3.ttf"));
 
-    // 设置字体
     QFont font;
     QStringList fontFamilies = QFontDatabase::applicationFontFamilies(fontId);
 
