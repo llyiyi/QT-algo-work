@@ -8,10 +8,8 @@ bestSortWin::bestSortWin(QWidget *parent) : QMainWindow(parent),
     this->setWindowTitle(QString("最强排序"));
     this->setWindowIcon(QIcon(":/icon.ico"));
 
-    // 添加需要的字体
     int fontId = QFontDatabase::addApplicationFont(QStringLiteral(":/font/hgy3.ttf"));
 
-    // 设置字体
     QFont font;
     QStringList fontFamilies = QFontDatabase::applicationFontFamilies(fontId);
 
@@ -41,7 +39,7 @@ bestSortWin::bestSortWin(QWidget *parent) : QMainWindow(parent),
     floatsort = new Bestsort<float>;
     doublesort = new Bestsort<double>;
 
-    this->setWindowIcon(QIcon(":/icon.ico")); // 选择图标
+    this->setWindowIcon(QIcon(":/icon.ico"));
 }
 bestSortWin::~bestSortWin()
 {
@@ -60,7 +58,6 @@ void bestSortWin::on_pushButton_clicked()
     if (fileName.isEmpty())
         return;
     qDebug() << fileName;
-    // 读取文件
     QFile file(fileName);
     if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
     {

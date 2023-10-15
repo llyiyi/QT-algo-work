@@ -35,7 +35,7 @@ private slots:
 
 private:
     Ui::bestSortWin *ui;
-    QString fileName = "";     // 用于存储文件名
+    QString fileName = "";
     int dataNum = 0;
     int type=0;
     bool sorted = false;

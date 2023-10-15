@@ -61,7 +61,6 @@ private:
     bool stop;              // 线程状态
     bool sortingDone;       // 是否完成排序
     bool pause;             // 是否处于暂停状态
-
     bool oneStep;           // 是否单步执行
     int algorithmSelected;  // 使用的排序算法
     int speed;              // 排序速度

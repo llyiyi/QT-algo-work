@@ -74,7 +74,6 @@ template <typename T>
 void Bestsort<T>::radixSort(std::vector<int>& arr) {
     int maximum = arr[0];
 
-    // Find the maximum element in the array
     for (size_t i = 1; i < arr.size(); i++) {
         if (arr[i] > maximum) {
             maximum = arr[i];
@@ -84,41 +83,35 @@ void Bestsort<T>::radixSort(std::vector<int>& arr) {
     int digits = 0;
     int divisor = 1;
 
-    // Calculate the number of digits in the maximum element
     while (maximum > 0) {
         digits++;
         maximum /= 10;
     }
 
-    // Create temporary storage for the sorted values
     std::vector<int> temp(arr.size());
 
     for (int i = 0; i < digits; i++) {
-        divisor *= 10;
         int count[10] = {0};
 
-        // Count the occurrences of each digit at the current position
         for (size_t j = 0; j < arr.size(); j++) {
             int digit = (arr[j] / divisor) % 10;
             count[digit]++;
         }
 
-        // Calculate the cumulative count
         for (int j = 1; j < 10; j++) {
             count[j] += count[j - 1];
         }
 
-        // Place elements in their correct positions in the temporary array
         for (int j = arr.size() - 1; j >= 0; j--) {
             int digit = (arr[j] / divisor) % 10;
             temp[count[digit] - 1] = arr[j];
             count[digit]--;
         }
 
-        // Copy the sorted values back to the original array
         for (size_t j = 0; j < arr.size(); j++) {
             arr[j] = temp[j];
         }
+        divisor *= 10;
     }
 }
 
