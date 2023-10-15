@@ -128,7 +128,7 @@ void SortWindow::on_pushButton_2_clicked()
     t.start();
     sortCtrl->wait();
     qDebug() << "排序用时：" << t.elapsed() << "ms" << endl;
-    ui->label_timer->setText(tr("耗时：%1ms").arg(t.elapsed()));
+    ui->label_timer->setText(tr("耗时：%1ms\n比较次数：%2\n操作次数：%3").arg(t.elapsed()).arg(sortCtrl->getCmpCnt()).arg(sortCtrl->getOprtCnt()));
     qDebug() << "排序结束" << endl;
     sorted = true;
     QMessageBox::information(this, tr("排序完成"), tr("排序完成！选择保存文件。"));
