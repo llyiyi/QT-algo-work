@@ -14,6 +14,7 @@ SortWindow::SortWindow(QWidget *parent) : QMainWindow(parent),
     ui->comboBox_algo->addItem(tr("插入排序  O(N^2)   稳定"));   //  Index 5      O(n^2)
     ui->comboBox_algo->addItem(tr("冒泡排序  O(N^2)   稳定"));   //  Index 6      O(n^2)
     ui->comboBox_algo->addItem(tr("选择排序  O(N^2)   不稳定")); //  Index 7      O(n^2)
+    ui->comboBox_algo->addItem(tr("外部排序"));                  //  Index 8
     ui->comboBox_algo->setCurrentIndex(1);
 
     sortCtrl = new sortalgotime(); // 实例化排序控制器
@@ -79,6 +80,15 @@ void SortWindow::on_pushButton_2_clicked()
         return;
     }
     qDebug() << "开始排序，排序算法：" << algorithmSelected << "；文件名：" << fileName << endl;
+    if (algorithmSelected == 8)
+    {
+        QTime t;
+        t.start();
+        esortCtrl = new esort(fileName.toStdString().c_str(), "out.txt");
+        qDebug() << "外部排序用时：" << t.elapsed() << "ms" << endl;
+        ui->label_timer->setText(tr("耗时：%1ms").arg(t.elapsed()));
+        return;
+    }
     sortCtrl->setSortingState(true);
     sortCtrl->setAttribute(dataNum, numbers, algorithmSelected);
     sortCtrl->start();
@@ -112,6 +122,11 @@ void SortWindow::on_pushButton_2_clicked()
 // 生成数据按钮
 void SortWindow::on_pushButton_genData_clicked()
 {
+    if (algorithmSelected == 8)
+    {
+        QMessageBox::warning(this, tr("警告"), tr("外部排序不需要生成数据！"));
+        return;
+    }
     srand(time(NULL));
     // 要求输入数据量
     bool ok;
