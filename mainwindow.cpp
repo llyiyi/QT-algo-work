@@ -97,6 +97,7 @@ MainWindow::MainWindow(QWidget *parent)
         ui->menubar->setStyleSheet(styleSheet);
         ui->statusbar->setStyleSheet(styleSheet);
         menu_algorithm->setStyleSheet(styleSheet);
+        menu_windows->setStyleSheet(styleSheet);
     }
     styleFile.close();
 

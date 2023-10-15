@@ -3,7 +3,7 @@
 
 #include <QMainWindow>
 #include <QDebug>
-#include <QTime> // 用于随机数生成
+#include <QTime>
 #include <QInputDialog>
 #include <QMessageBox>
 #include <QTimer>

@@ -8,7 +8,9 @@
 #include <QMessageBox>
 #include <QDebug>
 #include <QTime>
+#include <QFontDatabase>
 #include "sortalgotime.h"
+#include "esort.h"
 
 namespace Ui
 {
@@ -40,6 +42,7 @@ private:
     int *numbers;              // 用于存储数据
     bool sorted = false;       // 用于存储是否已经排序完成
     sortalgotime *sortCtrl;    // 排序控制器
+    esort *esortCtrl;          // 外部排序控制器
 };
 
 #endif // SORTWINDOW_H
