@@ -9,10 +9,6 @@ esort::esort(const char *unsort_file, const char *sort_file)
 
     const unsigned int count1 = 10000000;
     const unsigned int number_to_sort = 100000;
-<<<<<<< HEAD
-
-=======
->>>>>>> 31fef0ddfeaf4c8722a1a60753ad5367259b7048
 
     void init_data(unsigned int num); // 随机生成数据文件
     class ExternSort

@@ -14,7 +14,7 @@ SortWindow::SortWindow(QWidget *parent) : QMainWindow(parent),
     QStringList fontFamilies = QFontDatabase::applicationFontFamilies(fontId);
 
     font.setFamily(fontFamilies[0]);
-    font.setPixelSize(15);
+    font.setPixelSize(12);
     ui->label_status->setFont(font);
     font.setPixelSize(20);
     ui->label_timer->setFont(font);
