@@ -1,6 +1,7 @@
 #ifndef SORTWINDOW_H
 #define SORTWINDOW_H
 
+#include <vector>
 #include <QMainWindow>
 #include <QFileDialog>
 #include <QMessageBox>
