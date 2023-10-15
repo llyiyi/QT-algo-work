@@ -264,8 +264,9 @@ void sortAlgorithms::radixSort()
             return;
 
         int power = pow(10, i); // 用于下面取出每一位
-        int temp[dataNum];      // 辅助数组
-        int count[10];          // 计数数组，用于排列0-9
+        // int temp[dataNum];      // 辅助数组
+        int *temp = new int[dataNum]; // 辅助数组，存放于堆区，防止栈溢出
+        int count[10];                // 计数数组，用于排列0-9
         memset(count, 0, sizeof(count));
 
         // 按位大小统计个数
