@@ -5,6 +5,7 @@
 #include <QFileDialog>
 #include <QMessageBox>
 #include <QDebug>
+#include <QTime>
 #include "sortAlgorithms.h"
 
 namespace Ui

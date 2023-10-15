@@ -41,8 +41,9 @@ void SortWindow::on_pushButton_clicked()
     QTextStream in(&file);
     QString line = in.readLine();
     dataNum = line.toInt();
-    numbers = new int[dataNum];
-    for (int i = 0; i < dataNum; i++)
+    numbers = new int[dataNum + 1];
+    numbers[0] = dataNum;
+    for (int i = 1; i <= dataNum; i++)
     {
         line = in.readLine();
         numbers[i] = line.toInt();
@@ -66,15 +67,18 @@ void SortWindow::on_pushButton_2_clicked()
     }
     qDebug() << "开始排序，排序算法：" << algorithmSelected << "；文件名：" << fileName << endl;
     for (int i = 0; i < dataNum; i++)
-        qDebug() << numbers[i] << " ";
+        qDebug() << numbers[i];
     qDebug() << endl;
     sortCtrl->setOneStepState(false);
     sortCtrl->setSortingState(true);
     sortCtrl->setAttribute(dataNum, numbers, algorithmSelected, sortSpeed);
     sortCtrl->start();
-    while (sortCtrl->isSorting())
-        ;
+    // 计时
+    QTime t;
+    t.start();
+    sortCtrl->wait();
+    qDebug() << "排序用时：" << t.elapsed() << "ms" << endl;
     qDebug() << "排序结束" << endl;
     for (int i = 0; i < dataNum; i++)
-        qDebug() << numbers[i] << " ";
+        qDebug() << numbers[i];
 }
