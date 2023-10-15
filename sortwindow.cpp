@@ -24,6 +24,7 @@ SortWindow::~SortWindow()
     delete ui;
 }
 
+// 导入数据按钮
 void SortWindow::on_pushButton_clicked()
 {
     // 打开选择文件对话框
@@ -38,16 +39,20 @@ void SortWindow::on_pushButton_clicked()
         QMessageBox::warning(this, tr("Read File"), tr("Cannot open file:\n%1").arg(fileName));
         return;
     }
+    ui->label_status->setText(tr("文件装填状态：已填入文件 %1").arg(fileName));
     QTextStream in(&file);
-    QString line = in.readLine();
-    dataNum = line.toInt();
-    numbers = new int[dataNum + 1];
-    numbers[0] = dataNum;
-    for (int i = 1; i <= dataNum; i++)
+    QString line;
+    std::vector<int> temp;
+    dataNum = 0;
+    while (!in.atEnd())
     {
         line = in.readLine();
-        numbers[i] = line.toInt();
+        temp.push_back(line.toInt());
+        dataNum++;
     }
+    numbers = new int[dataNum + 1];
+    for (int i = 0; i < dataNum; i++)
+        numbers[i] = temp[i];
     file.close();
     // 显示数据
 }
@@ -58,11 +63,12 @@ void SortWindow::on_comboBox_algo_activated(int index)
     qDebug() << algorithmSelected;
 }
 
+// 开始排序按钮
 void SortWindow::on_pushButton_2_clicked()
 {
     if (dataNum == 0)
     {
-        QMessageBox::warning(this, tr("Error"), tr("Please import data first!"));
+        QMessageBox::warning(this, tr("警告"), tr("请先装填数据！"));
         return;
     }
     qDebug() << "开始排序，排序算法：" << algorithmSelected << "；文件名：" << fileName << endl;
@@ -71,14 +77,30 @@ void SortWindow::on_pushButton_2_clicked()
     qDebug() << endl;
     sortCtrl->setOneStepState(false);
     sortCtrl->setSortingState(true);
-    sortCtrl->setAttribute(dataNum, numbers, algorithmSelected, sortSpeed);
+    sortCtrl->setAttribute(dataNum, numbers, algorithmSelected, 0);
     sortCtrl->start();
     // 计时
     QTime t;
     t.start();
     sortCtrl->wait();
     qDebug() << "排序用时：" << t.elapsed() << "ms" << endl;
+    ui->label_timer->setText(tr("耗时：%1ms").arg(t.elapsed()));
     qDebug() << "排序结束" << endl;
-    for (int i = 0; i < dataNum; i++)
-        qDebug() << numbers[i];
+    QMessageBox::information(this, tr("排序完成"), tr("排序完成！选择保存文件。"));
+    fileName = QFileDialog::getSaveFileName(this, tr("保存文件"), "", tr("Text Files (*.txt)"));
+    QFile file(fileName);
+    if (!file.open(QIODevice::WriteOnly | QIODevice::Text))
+    {
+        QMessageBox::warning(this, tr("写入文件失败"), tr("无法保存文件：\n%1").arg(fileName));
+        return;
+    }
+    QTextStream out(&file);
+    if (ui->checkBox_dec->isChecked())
+        for (int i = dataNum - 1; i >= 0; i--)
+            out << numbers[i] << endl;
+    else
+        for (int i = 0; i < dataNum; i++)
+            out << numbers[i] << endl;
+    file.close();
+    ui->label_status->setText(tr("文件保存状态：已保存文件到 %1").arg(fileName));
 }
