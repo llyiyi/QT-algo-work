@@ -91,7 +91,6 @@ void Bestsort<T>::radixSort(std::vector<int>& arr) {
     std::vector<int> temp(arr.size());
 
     for (int i = 0; i < digits; i++) {
-        divisor *= 10;
         int count[10] = {0};
 
         for (size_t j = 0; j < arr.size(); j++) {
@@ -112,6 +111,7 @@ void Bestsort<T>::radixSort(std::vector<int>& arr) {
         for (size_t j = 0; j < arr.size(); j++) {
             arr[j] = temp[j];
         }
+        divisor *= 10;
     }
 }
 
