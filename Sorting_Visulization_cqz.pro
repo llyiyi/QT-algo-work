@@ -19,6 +19,8 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    bestsort.cpp \
+    esort.cpp \
     main.cpp \
     mainwindow.cpp \
     sortAlgorithms.cpp \
@@ -26,6 +28,8 @@ SOURCES += \
     sortwindow.cpp
 
 HEADERS += \
+    bestsort.h \
+    esort.h \
     mainwindow.h \
     sortAlgorithms.h \
     sortalgotime.h \
