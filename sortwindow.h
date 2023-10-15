@@ -38,7 +38,8 @@ private:
     int algorithmSelected = 1; // 用于存储用户选择的排序算法
     int dataNum = 0;           // 用于存储数据数量
     int *numbers;              // 用于存储数据
-    sortalgotime *sortCtrl;  // 排序控制器
+    bool sorted = false;       // 用于存储是否已经排序完成
+    sortalgotime *sortCtrl;    // 排序控制器
 };
 
 #endif // SORTWINDOW_H

@@ -56,7 +56,7 @@ void SortWindow::on_pushButton_clicked()
     for (int i = 0; i < dataNum; i++)
         numbers[i] = temp[i];
     file.close();
-    // 显示数据
+    sorted = false;
 }
 
 void SortWindow::on_comboBox_algo_activated(int index)
@@ -73,6 +73,11 @@ void SortWindow::on_pushButton_2_clicked()
         QMessageBox::warning(this, tr("警告"), tr("请先装填数据！"));
         return;
     }
+    if (sorted)
+    {
+        QMessageBox::warning(this, tr("警告"), tr("请先重新生成数据！"));
+        return;
+    }
     qDebug() << "开始排序，排序算法：" << algorithmSelected << "；文件名：" << fileName << endl;
     sortCtrl->setSortingState(true);
     sortCtrl->setAttribute(dataNum, numbers, algorithmSelected);
@@ -84,6 +89,7 @@ void SortWindow::on_pushButton_2_clicked()
     qDebug() << "排序用时：" << t.elapsed() << "ms" << endl;
     ui->label_timer->setText(tr("耗时：%1ms").arg(t.elapsed()));
     qDebug() << "排序结束" << endl;
+    sorted = true;
     QMessageBox::information(this, tr("排序完成"), tr("排序完成！选择保存文件。"));
     fileName = QFileDialog::getSaveFileName(this, tr("保存文件"), "", tr("Text Files (*.txt)"));
     QFile file(fileName);
@@ -103,6 +109,7 @@ void SortWindow::on_pushButton_2_clicked()
     ui->label_status->setText(tr("文件保存状态：已保存文件到 %1").arg(fileName));
 }
 
+// 生成数据按钮
 void SortWindow::on_pushButton_genData_clicked()
 {
     srand(time(NULL));
@@ -117,6 +124,7 @@ void SortWindow::on_pushButton_genData_clicked()
     numbers = new int[dataNum + 1];
     for (int i = 0; i < dataNum; i++)
         numbers[i] = rand() % 1000000;
+    sorted = false;
     // 显示数据
     ui->label_status->setText(tr("装填状态：已生成随机数据%1个").arg(QString::number(dataNum)));
 }
