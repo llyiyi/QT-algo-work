@@ -15,3 +15,4 @@ public:
 };
 
 #endif // BESTSORT_H
+
