@@ -67,7 +67,6 @@ MainWindow::MainWindow(QWidget *parent)
     ui->slider_sortingSpeed->setValue(50);    // 设置滑动条控件初始的值
 
     // 鼠标经过时手型图标
-    ui->btn_dataImport->setCursor(QCursor(Qt::PointingHandCursor));
     ui->btn_dataGenerate->setCursor(QCursor(Qt::PointingHandCursor));
     ui->btn_sortingStart->setCursor(QCursor(Qt::PointingHandCursor));
     ui->btn_sortingPause->setCursor(QCursor(Qt::PointingHandCursor));
@@ -125,7 +124,7 @@ MainWindow::MainWindow(QWidget *parent)
 void MainWindow::initMenuBar()
 {
     // 添加菜单栏
-    menu_algorithm = new QMenu(tr("算法"), this);
+    menu_algorithm = new QMenu(tr("算法可视化演示"), this);
     menu_windows = new QMenu(tr("排序"), this);
 
     ui->menubar->addMenu(menu_algorithm);
@@ -197,119 +196,6 @@ void MainWindow::setSpeed(int speed)
     qDebug() << "当前速度：" << sortSpeed << endl;
 }
 
-// 导入数据按钮
-void MainWindow::on_btn_dataImport_clicked()
-{
-    // 正在排序中，询问是否用新数据排序
-    if (sortCtrl->isSorting())
-    {
-        if (QMessageBox::Ok == QMessageBox::question(this, "提示", "正在排序中，\n是否停止本次排序，并重新生成数据？", QMessageBox::Ok | QMessageBox::Cancel))
-        {
-            if (sortCtrl->isPause())
-                sortCtrl->resumeSorting(); // 处于暂停状态时先结束暂停，否则新一轮排序无法开始
-            if (sortCtrl->isOneStep())
-                sortCtrl->setOneStepState(false); // 处于单步执行状态时先结束单步执行
-            sortCtrl->stopSorting();              // 需要生成数据，先停止排序
-        }
-        else
-            return;
-    }
-
-    if (dataGenerating || dataImporting) // 正在生成数据
-    {
-        QMessageBox::information(this, "提示", "正在生成数据，请等待！");
-        return;
-    }
-
-    // 新建导入数据对话框
-    dataImportDialog *diDialog = new dataImportDialog;
-    int fd = diDialog->exec(); // 设置模态对话框
-    if (fd != QDialog::Accepted)
-        return; // 用户取消读入
-
-    // 打开用户选择的文件
-    QString path = diDialog->getFilePath();
-    qDebug() << "用户选择的路径： " << path << endl;
-    if (path == NULL)
-    {
-        QMessageBox::information(this, "提示", "文件打开失败，请重新导入数据！");
-        return;
-    }
-
-    QFile dtFile(path);
-    if (!dtFile.open(QIODevice::ReadOnly | QIODevice::Text) || dtFile.size() == 0)
-    {
-        QMessageBox::information(this, "提示", "文件打开失败，请重新导入数据！");
-        return;
-    }
-
-    // 修改状态，防止生成过程中再次点击生成/导入数据按钮
-    dataImporting = 1;
-
-    // 把之前的“柱子”全部删除并建立存放新数据的对象
-    deleteColumns();
-    sorted = false;
-    numbers = new int[dataNum + 10];
-
-    QString line;
-    QTextStream in(&dtFile);
-    if (!in.atEnd()) // 读入数据量 dataNum
-    {
-        line = in.readLine();
-        dataNum = line.toInt();
-        if (dataNum > 300)
-        {
-            QMessageBox::information(this, "提示", "请您减小数据量，本程序支持的最大数据量为300！");
-            dataImporting = 0; // 重置读入状态，没有读入数据
-            return;
-        }
-    }
-
-    for (int i = 0; i < dataNum; i++) // 读入待排序数据存入数组
-    {
-        if (!in.atEnd())
-        {
-            line = in.readLine();
-            numbers[i] = line.toInt();
-            if (numbers[i] < 0) // 禁止0和负数参与（显示不出来）
-            {
-                QMessageBox::information(this, "提示", "对不起，本程序仅支持正数参与排序，请修改数据！");
-                dataImporting = 0; // 重置读入状态，没有读入数据
-                return;
-            }
-        }
-        else // 数据量与输入不匹配（数据量 > 实际数据）    注：数据量 < 实际数据时不做判断，只读入前n个数据
-        {
-            QMessageBox::information(this, "提示", "数据量与数据个数不匹配，请检查数据格式！");
-            dataImporting = 0; // 重置读入状态，没有读入数据
-            return;
-        }
-    }
-
-    dtFile.close();
-
-    // 输出读入的数据检查
-    qDebug() << "用户导入数据如下，共" << dataNum << "个数据" << endl;
-    debug_outNumber();
-
-    // 将数据添加到视图
-    addDataColumns();
-
-    // 数据导入结束，修改各种状态和界面显示
-    initVar();
-    initLabel();
-    timer->stop();
-    prevDataNum = dataNum; // 数据添加完毕，记录本次数据量
-    dataImporting = 0;
-    datahaved = 1;
-
-    // 设置可以调整窗口大小（每次开始排序时禁止改变窗口大小，点击生成/导入数据会停止上次排序，数据添加完毕后恢复窗口大小设置）
-    this->setMinimumSize(800, 600);
-    this->setMaximumSize(QSize(QWIDGETSIZE_MAX, QWIDGETSIZE_MAX));
-
-    // 修改窗口标题
-    this->setWindowTitle(QString("排序算法可视化系统"));
-}
 
 // 生成数据按钮
 void MainWindow::on_btn_dataGenerate_clicked()

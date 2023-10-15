@@ -36,7 +36,6 @@ public:
 
 private slots:
     // 按钮
-    void on_btn_dataImport_clicked();      // 导入数据按钮
     void on_btn_dataGenerate_clicked();    // 生成数据按钮
     void on_btn_sortingStart_clicked();    // 开始排序按钮
     void on_btn_sortingPause_clicked();    // 暂停排序按钮

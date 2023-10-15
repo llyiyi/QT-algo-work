@@ -246,26 +246,13 @@ padding: 0px;</string>
           <number>4</number>
          </property>
          <item>
-          <widget class="QPushButton" name="btn_dataImport">
-           <property name="toolTip">
-            <string/>
-           </property>
-           <property name="statusTip">
-            <string>导入新数据，开始新的排序。 （若处于排序过程中，则会停止正在进行的排序）</string>
-           </property>
-           <property name="whatsThis">
-            <string/>
-           </property>
-           <property name="styleSheet">
-            <string notr="true">font: 13px &quot;宋体&quot;;</string>
-           </property>
-           <property name="text">
-            <string>导入数据</string>
-           </property>
-          </widget>
-         </item>
-         <item>
           <widget class="QPushButton" name="btn_dataGenerate">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
            <property name="toolTip">
             <string/>
            </property>
