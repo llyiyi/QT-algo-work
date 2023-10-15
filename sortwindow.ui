@@ -35,6 +35,9 @@
       <height>31</height>
      </rect>
     </property>
+    <property name="styleSheet">
+     <string notr="true">font: 13px &quot;宋体&quot;;</string>
+    </property>
     <property name="text">
      <string>打开文件</string>
     </property>
@@ -47,6 +50,9 @@
       <width>101</width>
       <height>31</height>
      </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">font: 13px &quot;宋体&quot;;</string>
     </property>
     <property name="text">
      <string>开始排序</string>
@@ -100,6 +106,9 @@
       <height>22</height>
      </rect>
     </property>
+    <property name="styleSheet">
+     <string notr="true">font: 13px &quot;宋体&quot;;</string>
+    </property>
     <property name="text">
      <string>降序排序</string>
     </property>
@@ -124,6 +133,9 @@
       <width>0</width>
       <height>0</height>
      </size>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">font: 13px &quot;宋体&quot;;</string>
     </property>
     <property name="text">
      <string>生成数据</string>
