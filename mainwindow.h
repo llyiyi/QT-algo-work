@@ -11,7 +11,6 @@
 #include <QMouseEvent>
 #include <QFontDatabase>
 #include "sortAlgorithms.h"
-#include "dataImportDialog.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui

@@ -19,20 +19,17 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
-    dataImportDialog.cpp \
     main.cpp \
     mainwindow.cpp \
     sortAlgorithms.cpp \
     sortwindow.cpp
 
 HEADERS += \
-    dataImportDialog.h \
     mainwindow.h \
     sortAlgorithms.h \
     sortwindow.h
 
 FORMS += \
-    dataImportDialog.ui \
     mainwindow.ui \
     sortwindow.ui
 

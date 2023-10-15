@@ -100,8 +100,8 @@ MainWindow::MainWindow(QWidget *parent)
     }
     styleFile.close();
 
-    ui->ShowSortingVisulizaion->setStyleSheet("background-color: qlineargradient(spread:pad, x1:0.5, y1:1, x2:0.517, y2:0, stop:0.465909 rgba(27, 57, 91, 255), stop:0.948864 rgba(37, 38, 69, 255));"
-                                              "border-color: qlineargradient(spread:pad, x1:0.767, y1:0, x2:1, y2:1, stop:0 rgba(76, 128, 209, 255), stop:1 rgba(119, 178, 205, 255));"
+    ui->ShowSortingVisulizaion->setStyleSheet("background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 #6495ED ,stop:1 #4682B4);"
+                                              "border-color: qlineargradient(spread:pad, x1:0.767, y1:0, x2:1, y2:1, stop:0 rgba(47, 79, 79, 255), stop:1 rgba(119, 178, 205, 255));"
                                               "border-width: 1px;"
                                               "border-style: solid;");
 
