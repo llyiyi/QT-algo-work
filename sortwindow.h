@@ -8,7 +8,7 @@
 #include <QMessageBox>
 #include <QDebug>
 #include <QTime>
-#include "sortAlgorithms.h"
+#include "sortalgotime.h"
 
 namespace Ui
 {
@@ -38,8 +38,7 @@ private:
     int algorithmSelected = 1; // 用于存储用户选择的排序算法
     int dataNum = 0;           // 用于存储数据数量
     int *numbers;              // 用于存储数据
-    int sortSpeed = 100;       // 用于存储排序速度
-    sortAlgorithms *sortCtrl;  // 排序控制器
+    sortalgotime *sortCtrl;  // 排序控制器
 };
 
 #endif // SORTWINDOW_H

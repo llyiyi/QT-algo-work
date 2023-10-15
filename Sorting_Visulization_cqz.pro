@@ -22,11 +22,13 @@ SOURCES += \
     main.cpp \
     mainwindow.cpp \
     sortAlgorithms.cpp \
+    sortalgotime.cpp \
     sortwindow.cpp
 
 HEADERS += \
     mainwindow.h \
     sortAlgorithms.h \
+    sortalgotime.h \
     sortwindow.h
 
 FORMS += \
