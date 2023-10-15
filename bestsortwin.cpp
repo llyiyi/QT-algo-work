@@ -1,10 +1,8 @@
 #include "bestsortwin.h"
 #include "ui_bestsortwin.h"
 
-
-bestSortWin::bestSortWin(QWidget *parent) :
-    QMainWindow(parent),
-    ui(new Ui::bestSortWin)
+bestSortWin::bestSortWin(QWidget *parent) : QMainWindow(parent),
+                                            ui(new Ui::bestSortWin)
 {
     ui->setupUi(this);
     this->setWindowTitle(QString("最强排序"));
@@ -39,9 +37,9 @@ bestSortWin::bestSortWin(QWidget *parent) :
     ui->comboBox->addItem(tr("float"));
     ui->comboBox->addItem(tr("double"));
 
-    intsort=new Bestsort<int>;
-    floatsort=new Bestsort<float>;
-    doublesort=new Bestsort<double>;
+    intsort = new Bestsort<int>;
+    floatsort = new Bestsort<float>;
+    doublesort = new Bestsort<double>;
 
     this->setWindowIcon(QIcon(":/icon.ico")); // 选择图标
 }
@@ -52,9 +50,10 @@ bestSortWin::~bestSortWin()
 
 void bestSortWin::on_comboBox_activated(int index)
 {
-    type=index;
+    type = index;
 }
 
+// 装填按钮
 void bestSortWin::on_pushButton_clicked()
 {
     fileName = QFileDialog::getOpenFileName(this, tr("Open File"), "", tr("Text Files (*.txt)"));
@@ -71,10 +70,10 @@ void bestSortWin::on_pushButton_clicked()
     ui->label1->setText(tr("装填状态：已填入文件 %1").arg(fileName));
     QTextStream in(&file);
     QString line;
-    switch(type)
+    switch (type)
     {
     case 0:
-        {
+    {
         dataNum = 0;
         numint.clear();
         while (!in.atEnd())
@@ -85,9 +84,10 @@ void bestSortWin::on_pushButton_clicked()
         }
         file.close();
         sorted = false;
-        break;}
+        break;
+    }
     case 1:
-        {
+    {
         dataNum = 0;
         numfloat.clear();
         while (!in.atEnd())
@@ -98,9 +98,10 @@ void bestSortWin::on_pushButton_clicked()
         }
         file.close();
         sorted = false;
-        break;}
+        break;
+    }
     case 2:
-        {
+    {
         dataNum = 0;
         numdouble.clear();
         while (!in.atEnd())
@@ -111,11 +112,12 @@ void bestSortWin::on_pushButton_clicked()
         }
         file.close();
         sorted = false;
-        break;}
+        break;
+    }
     }
 }
 
-
+// 排序按钮
 void bestSortWin::on_pushButton_2_clicked()
 {
     if (dataNum == 0)
@@ -127,7 +129,8 @@ void bestSortWin::on_pushButton_2_clicked()
     QTime t;
     t.start();
 
-    switch(type){
+    switch (type)
+    {
     case 0:
         intsort->sort(numint);
         break;
@@ -153,34 +156,32 @@ void bestSortWin::on_pushButton_2_clicked()
     QTextStream out(&file);
     if (ui->checkBox->isChecked())
         for (int i = dataNum - 1; i >= 0; i--)
-            switch (type) {
+            switch (type)
+            {
             case 0:
                 out << numint[i] << endl;
                 break;
             case 1:
-                out << numfloat[i] << endl;
+                out << QString::number(numfloat[i], 'f', 8) << endl;
                 break;
             case 2:
-                out << numdouble[i] << endl;
+                out << QString::number(numdouble[i], 'f', 12) << endl;
                 break;
             }
     else
         for (int i = 0; i < dataNum; i++)
-            switch (type) {
+            switch (type)
+            {
             case 0:
                 out << numint[i] << endl;
                 break;
             case 1:
-                out << numfloat[i] << endl;
+                out << QString::number(numfloat[i], 'f', 8) << endl;
                 break;
             case 2:
-                out << numdouble[i] << endl;
+                out << QString::number(numdouble[i], 'f', 12) << endl;
                 break;
             }
     file.close();
     ui->label1->setText(tr("文件保存状态：已保存文件到 %1").arg(fileName));
 }
-
-
-
-
