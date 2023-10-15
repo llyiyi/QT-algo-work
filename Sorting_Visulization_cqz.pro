@@ -20,6 +20,7 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
     bestsort.cpp \
+    bestsortwin.cpp \
     esort.cpp \
     main.cpp \
     mainwindow.cpp \
@@ -29,6 +30,7 @@ SOURCES += \
 
 HEADERS += \
     bestsort.h \
+    bestsortwin.h \
     esort.h \
     mainwindow.h \
     sortAlgorithms.h \
@@ -36,6 +38,7 @@ HEADERS += \
     sortwindow.h
 
 FORMS += \
+    bestsortwin.ui \
     mainwindow.ui \
     sortwindow.ui
 

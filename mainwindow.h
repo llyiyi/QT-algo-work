@@ -51,6 +51,7 @@ private slots:
     void menuAct_actBubbleSort();
     void menuAct_actSelectSort();
     void menuAct_newWindow();
+    void menuAct_bestwin();
 
     // 其他
     void setSpeed(int speed);                                     // 根据滑块设置速度
@@ -96,6 +97,7 @@ private:
     QAction *actBubbleSort;
     QAction *actSelectSort;
     QAction *actSortWindow;
+    QAction *actBestSort;
 
     // 变量
     bool sorted = 0;                    // 当前数据是否已排序

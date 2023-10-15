@@ -5,7 +5,7 @@ SortWindow::SortWindow(QWidget *parent) : QMainWindow(parent),
                                           ui(new Ui::SortWindow)
 {
     ui->setupUi(this);
-    this->setWindowTitle(QString("排序算法可视化系统"));
+    this->setWindowTitle(QString("其他排序"));
     this->setWindowIcon(QIcon(":/icon.ico"));
 
     // 添加需要的字体

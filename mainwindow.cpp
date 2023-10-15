@@ -1,6 +1,8 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "sortwindow.h"
+#include "bestsortwin.h"
+
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent), ui(new Ui::MainWindow)
@@ -126,7 +128,7 @@ void MainWindow::initMenuBar()
 {
     // 添加菜单栏
     menu_algorithm = new QMenu(tr("算法可视化演示"), this);
-    menu_windows = new QMenu(tr("排序"), this);
+    menu_windows = new QMenu(tr("排序数据"), this);
 
     ui->menubar->addMenu(menu_algorithm);
     ui->menubar->addMenu(menu_windows);
@@ -141,7 +143,8 @@ void MainWindow::initMenuBar()
     actBubbleSort = new QAction("冒泡排序", this);
     actSelectSort = new QAction("选择排序", this);
 
-    actSortWindow = new QAction("排序", this);
+    actSortWindow = new QAction("其他排序", this);
+    actBestSort = new QAction("最强排序", this);
 
     // 添加动作
     menu_algorithm->addAction(actRadixSort);
@@ -153,6 +156,7 @@ void MainWindow::initMenuBar()
     menu_algorithm->addAction(actBubbleSort);
     menu_algorithm->addAction(actSelectSort);
     menu_windows->addAction(actSortWindow);
+    menu_windows->addAction(actBestSort);
 
     // 连接动作
     connect(actRadixSort, SIGNAL(triggered()), this, SLOT(menuAct_actRadixSort()));
@@ -164,6 +168,7 @@ void MainWindow::initMenuBar()
     connect(actBubbleSort, SIGNAL(triggered()), this, SLOT(menuAct_actBubbleSort()));
     connect(actSelectSort, SIGNAL(triggered()), this, SLOT(menuAct_actSelectSort()));
     connect(actSortWindow, SIGNAL(triggered()), this, SLOT(menuAct_newWindow()));
+    connect(actBestSort, SIGNAL(triggered()), this, SLOT(menuAct_bestwin()));
 }
 
 MainWindow::~MainWindow()
@@ -451,6 +456,13 @@ void MainWindow::menuAct_newWindow()
 {
     // 打开新窗体
     SortWindow *w = new SortWindow();
+    w->show();
+}
+
+void MainWindow::menuAct_bestwin()
+{
+    // 打开新窗体
+    bestSortWin *w = new bestSortWin();
     w->show();
 }
 
