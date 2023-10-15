@@ -3,7 +3,6 @@
 #include "sortwindow.h"
 #include "bestsortwin.h"
 
-
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent), ui(new Ui::MainWindow)
 {
@@ -31,10 +30,10 @@ MainWindow::MainWindow(QWidget *parent)
     initMenuBar();
 
     // 状态栏设置
-    sortName = new QLabel;    // 状态栏显示排序算法名称，未开始排序显示排序未开始，排序完成后显示排序已完成
-    oprtContent = new QLabel; // 状态栏显示操作内容，如访问、交换、比较xx下标等
-    sortDscrb = new QLabel;   // 状态栏显示算法描述，当前执行的操作中文描述
-    keyValue = new QLabel;    // 状态栏显示排序中关键变量的值
+    sortName = new QLabel;
+    oprtContent = new QLabel;
+    sortDscrb = new QLabel;
+    keyValue = new QLabel;
 
     sortName->setStyleSheet("font: 12px \"宋体\";");
     oprtContent->setStyleSheet("font: 12px \"宋体\";");
@@ -58,15 +57,15 @@ MainWindow::MainWindow(QWidget *parent)
 
     // 排序数据量默认为100，再次添加数据时默认为上次排序数据量
     dataNum = 100;
-    numbers = new int[10]; // 大小无所谓，每次生成数据时会先删除numbers对象，此处是为了第一次可以正常生成数据
+    numbers = new int[10];
 
     // 随机数种子
     qsrand(QTime(0, 0, 0).secsTo(QTime::currentTime()));
 
     // 速度滑块设置 通过sortAlgorithms类中msleep()睡眠设置的时间调节快慢
-    ui->slider_sortingSpeed->setMinimum(1);   // 设置滑动条控件的最小值
-    ui->slider_sortingSpeed->setMaximum(100); // 设置滑动条控件的最大值
-    ui->slider_sortingSpeed->setValue(50);    // 设置滑动条控件初始的值
+    ui->slider_sortingSpeed->setMinimum(1);
+    ui->slider_sortingSpeed->setMaximum(100);
+    ui->slider_sortingSpeed->setValue(50);
 
     // 鼠标经过时手型图标
     ui->btn_dataGenerate->setCursor(QCursor(Qt::PointingHandCursor));
@@ -109,8 +108,6 @@ MainWindow::MainWindow(QWidget *parent)
                                               "border-style: solid;");
 
     // 连接信号和槽
-    // 根据官方文档，槽函数使用on_xxx_SIGNAL()命名时不需要写connect()，编译时自动连接对应信号
-    // 按钮全部使用上述方式，下方只包含其他控件
     connect(sortCtrl, SIGNAL(sortFinish()), this, SLOT(showFinish()));                                      // 完成动画
     connect(sortCtrl, SIGNAL(swapColumn(int, int, int *)), this, SLOT(updateColumns(int, int, int *)));     // 更新两个柱子的值，与第三个参数数组中的一致。并不是真正的交换两个柱子
     connect(sortCtrl, SIGNAL(updtColumn(int, bool, int *)), this, SLOT(updateOneColumn(int, bool, int *))); // 更新一个柱子的值
@@ -185,8 +182,6 @@ MainWindow::~MainWindow()
     delete sortDscrb;
 }
 
-// ------------------------------- 按钮/控件对应操作 ---------------------------------------
-
 // 用户选择了排序算法
 void MainWindow::sortingAlgorithm(int index)
 {
@@ -201,7 +196,6 @@ void MainWindow::setSpeed(int speed)
     sortCtrl->setSpeed(this->sortSpeed);
     qDebug() << "当前速度：" << sortSpeed << endl;
 }
-
 
 // 生成数据按钮
 void MainWindow::on_btn_dataGenerate_clicked()
@@ -227,14 +221,7 @@ void MainWindow::on_btn_dataGenerate_clicked()
     }
 
     bool bOk = false;
-    dataNum = QInputDialog::getInt(this,
-                                   "设置数据量",
-                                   "请输入演示的数据量(2-300):",
-                                   dataNum, // 默认值, 初始为100，prevDataNum初始值为0
-                                   2,       // 最小值
-                                   300,     // 最大值
-                                   10,      // 步进
-                                   &bOk);   // 用户是否点击OK标志
+    dataNum = QInputDialog::getInt(this, "设置数据量", "请输入演示的数据量(2-300):", dataNum, 2, 300, 10, &bOk);
     if (bOk && dataNum >= 0)
     {
         qDebug() << "数据量：" << dataNum << endl;
@@ -385,8 +372,6 @@ void MainWindow::on_btn_oneStep_clicked()
     }
 }
 
-// ------------------------------菜单栏槽函数---------------------------------
-
 // 菜单栏-算法
 void MainWindow::menuAct_actRadixSort()
 {
@@ -466,10 +451,8 @@ void MainWindow::menuAct_bestwin()
     w->show();
 }
 
-// -------------------------------其他槽函数----------------------------------
-
 // 更新a和b两个位置的柱子的值，与排序后的新值newHeights保持一致。与交换信号关联，可表示交换操作
-void MainWindow::updateColumns(int a, int b, int *newHeights) // newHeights与numbers是一个数组。为了含义清晰，所以重新传回来作为newHeights
+void MainWindow::updateColumns(int a, int b, int *newHeights)
 {
     if (a < 0 || a >= dataNum)
         return;
@@ -644,8 +627,6 @@ void MainWindow::showFinish()
     // 允许调整窗口大小
     this->setMinimumSize(800, 600);
     this->setMaximumSize(QSize(QWIDGETSIZE_MAX, QWIDGETSIZE_MAX));
-    //    this->setWindowFlags(this->windowFlags()& Qt::WindowMinMaxButtonsHint | Qt::WindowCloseButtonHint);
-    //    this->show();
 
     // 修改窗口标题
     this->setWindowTitle(QString("排序算法可视化系统"));
@@ -711,12 +692,10 @@ void MainWindow::sbShow(int num, QString text)
     }
 }
 
-// ----------------------------------其他函数---------------------------------------
-
 // 生成排序数据打乱后显示到界面
 void MainWindow::dataGenerator()
 {
-    if (sortCtrl->isSorting()) // 正在排序中，不能生成新数据
+    if (sortCtrl->isSorting())
     {
         QMessageBox::warning(this, "错误", "正在排序中！\n请在排序结束后添加数据！");
         return;
@@ -762,9 +741,6 @@ void MainWindow::dataGenerator()
     addDataColumns();
 }
 
-// 将数据用柱状显示到界面
-// 最初用布局管理器实现缩放，但高度无法自动缩放，因此指定了高度
-// 然后发现100、300的数据量时，柱子可以随窗口缩放水平铺满整个窗口，但200左右时柱子不会自动缩放，只会居中，因此宽度也手动设置
 void MainWindow::addDataColumns()
 {
     // 设置“柱子”的样式并依次加入到布局中
