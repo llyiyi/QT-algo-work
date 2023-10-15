@@ -2,6 +2,7 @@
 #define SORTWINDOW_H
 
 #include <vector>
+#include <QInputDialog>
 #include <QMainWindow>
 #include <QFileDialog>
 #include <QMessageBox>
@@ -28,6 +29,8 @@ private slots:
     void on_comboBox_algo_activated(int index);
 
     void on_pushButton_2_clicked();
+
+    void on_pushButton_genData_clicked();
 
 private:
     Ui::SortWindow *ui;

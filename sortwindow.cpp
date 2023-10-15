@@ -18,7 +18,7 @@ SortWindow::SortWindow(QWidget *parent) : QMainWindow(parent),
 
     sortCtrl = new sortAlgorithms(); // 实例化排序控制器
 
-    this->setWindowIcon(QIcon(":/icon.ico"));   // 选择图标
+    this->setWindowIcon(QIcon(":/icon.ico")); // 选择图标
 }
 
 SortWindow::~SortWindow()
@@ -41,7 +41,7 @@ void SortWindow::on_pushButton_clicked()
         QMessageBox::warning(this, tr("Read File"), tr("Cannot open file:\n%1").arg(fileName));
         return;
     }
-    ui->label_status->setText(tr("文件装填状态：已填入文件 %1").arg(fileName));
+    ui->label_status->setText(tr("装填状态：已填入文件 %1").arg(fileName));
     QTextStream in(&file);
     QString line;
     std::vector<int> temp;
@@ -74,9 +74,6 @@ void SortWindow::on_pushButton_2_clicked()
         return;
     }
     qDebug() << "开始排序，排序算法：" << algorithmSelected << "；文件名：" << fileName << endl;
-    for (int i = 0; i < dataNum; i++)
-        qDebug() << numbers[i];
-    qDebug() << endl;
     sortCtrl->setOneStepState(false);
     sortCtrl->setSortingState(true);
     sortCtrl->setAttribute(dataNum, numbers, algorithmSelected, 0);
@@ -105,4 +102,22 @@ void SortWindow::on_pushButton_2_clicked()
             out << numbers[i] << endl;
     file.close();
     ui->label_status->setText(tr("文件保存状态：已保存文件到 %1").arg(fileName));
+}
+
+void SortWindow::on_pushButton_genData_clicked()
+{
+    srand(time(NULL));
+    // 要求输入数据量
+    bool ok;
+    int temp = QInputDialog::getInt(this, tr("输入数据量"), tr("请输入数据量："), 100, 1, 1000000, 1, &ok);
+    if (ok)
+        dataNum = temp;
+    else
+        return;
+    // 生成随机数据，装填到numbers数组中
+    numbers = new int[dataNum + 1];
+    for (int i = 0; i < dataNum; i++)
+        numbers[i] = rand() % 1000000;
+    // 显示数据
+    ui->label_status->setText(tr("装填状态：已生成随机数据%1个").arg(QString::number(dataNum)));
 }
