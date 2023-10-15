@@ -664,6 +664,9 @@ void sortAlgorithms::bubbleSort()
             {
                 pauseLock.lock();
                 pauseLock.unlock();
+                emit compareColumn(j, j + 1);
+                emit baseColumn(j);     // 指示当前位置颜色
+                msleep(speed);
             }
 
             if (numbers[j] > numbers[j + 1])
@@ -672,6 +675,8 @@ void sortAlgorithms::bubbleSort()
 
                 pauseLock.lock();
                 pauseLock.unlock();
+                emit swapColumn(j, j + 1, numbers);
+                msleep(speed);
             }
         }
     }
