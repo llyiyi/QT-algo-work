@@ -33,8 +33,6 @@ SortWindow::SortWindow(QWidget *parent) : QMainWindow(parent),
     }
     styleFile.close();
 
-
-
     // 给下拉框添加内容
     ui->comboBox_algo->addItem(tr("基数排序  O(N)     稳定"));   //  Index 0      O(n)
     ui->comboBox_algo->addItem(tr("快速排序  O(NlogN) 不稳定")); //  Index 1      O(nlogn)
@@ -112,6 +110,11 @@ void SortWindow::on_pushButton_2_clicked()
     qDebug() << "开始排序，排序算法：" << algorithmSelected << "；文件名：" << fileName << endl;
     if (algorithmSelected == 8)
     {
+        if (fileName.isEmpty())
+        {
+            QMessageBox::warning(this, tr("警告"), tr("请先装填数据！"));
+            return;
+        }
         QTime t;
         t.start();
         esortCtrl = new esort(fileName.toStdString().c_str(), "out.txt");
