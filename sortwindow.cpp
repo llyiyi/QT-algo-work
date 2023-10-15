@@ -17,6 +17,8 @@ SortWindow::SortWindow(QWidget *parent) : QMainWindow(parent),
     ui->comboBox_algo->setCurrentIndex(1);
 
     sortCtrl = new sortAlgorithms(); // 实例化排序控制器
+
+    this->setWindowIcon(QIcon(":/icon.ico"));   // 选择图标
 }
 
 SortWindow::~SortWindow()
