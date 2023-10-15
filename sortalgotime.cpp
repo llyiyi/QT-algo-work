@@ -24,7 +24,6 @@ void sortalgotime::setSortingState(bool state)
     sortingDone = !state;
 }
 
-
 // 设置排序属性
 void sortalgotime::setAttribute(int dataNum, int *numbers, int algorithmSelected)
 {
@@ -34,17 +33,16 @@ void sortalgotime::setAttribute(int dataNum, int *numbers, int algorithmSelected
 }
 
 // 获取比较次数
-int sortalgotime::getCmpCnt()
+long long sortalgotime::getCmpCnt()
 {
     return cmpCnt;
 }
 
 // 获取交换次数
-int sortalgotime::getOprtCnt()
+long long sortalgotime::getOprtCnt()
 {
     return oprtCnt;
 }
-
 
 void sortalgotime::run()
 {
@@ -161,7 +159,6 @@ void sortalgotime::radixSort()
             max_flag = i;
     }
 
-
     int digits = 0;
 
     while (maximum > 0)
@@ -178,7 +175,6 @@ void sortalgotime::radixSort()
         int count[10];
         memset(count, 0, sizeof(count));
 
-
         for (int j = 0; j < dataNum; j++)
         {
             int num = (numbers[j] / power) % 10;
@@ -187,12 +183,10 @@ void sortalgotime::radixSort()
             cmpCnt++;
         }
 
-
         for (int j = 1; j < 10; j++)
         {
             count[j] += count[j - 1];
         }
-
 
         for (int j = dataNum - 1; j >= 0; j--)
         {
@@ -202,9 +196,7 @@ void sortalgotime::radixSort()
             count[num]--;
 
             cmpCnt++;
-
         }
-
 
         for (int j = 0; j < dataNum; j++)
         {
@@ -228,8 +220,6 @@ void sortalgotime::quickSort(int left, int right)
     while (i < j)
     {
 
-
-
         while (numbers[j] >= base && i < j)
         {
             j--;
@@ -244,7 +234,6 @@ void sortalgotime::quickSort(int left, int right)
         if (i < j)
         {
             swap(i, j);
-
         }
     }
 
@@ -316,7 +305,6 @@ void sortalgotime::heapSort()
     {
         max_heapify(i, dataNum - 1);
     }
-
 
     for (int i = dataNum - 1; i > 0; i--)
     {
@@ -400,11 +388,9 @@ void sortalgotime::insertSort()
         int key = numbers[i];
         int j = i - 1;
 
-
         while (j >= 0 && numbers[j] > key)
         {
             cmpCnt++;
-
 
             numbers[j + 1] = numbers[j];
 
@@ -430,7 +416,6 @@ void sortalgotime::bubbleSort()
             if (numbers[j] > numbers[j + 1])
             {
                 swap(j, j + 1);
-
             }
         }
     }
@@ -443,19 +428,15 @@ void sortalgotime::selectSort()
     {
         int min = numbers[i], min_flag = i;
 
-
         for (int j = i + 1; j < dataNum; j++)
         {
 
-
             cmpCnt++;
-
 
             if (numbers[j] < min)
             {
                 min = numbers[j];
                 min_flag = j;
-
             }
         }
 

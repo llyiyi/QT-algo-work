@@ -2,10 +2,10 @@
 
 sortAlgorithms::sortAlgorithms()
 {
-    stop = 1;   
-    cmpCnt = 0; 
+    stop = 1;
+    cmpCnt = 0;
     oprtCnt = 0;
-    oneStep = 0; 
+    oneStep = 0;
     pause = 0;
 }
 
@@ -62,13 +62,13 @@ void sortAlgorithms::setAttribute(int dataNum, int *numbers, int algorithmSelect
 }
 
 // 获取比较次数
-int sortAlgorithms::getCmpCnt()
+long long sortAlgorithms::getCmpCnt()
 {
     return cmpCnt;
 }
 
 // 获取交换次数
-int sortAlgorithms::getOprtCnt()
+long long sortAlgorithms::getOprtCnt()
 {
     return oprtCnt;
 }
@@ -204,7 +204,7 @@ void sortAlgorithms::process()
 
     // 排序结束，发送结束的信号
     emit showSBMsg(1, QString("排序已完成"));
-    emit showSBMsg(2, QString("")); 
+    emit showSBMsg(2, QString(""));
     emit showSBMsg(3, QString(""));
     emit showSBMsg(4, QString(""));
     emit sortFinish();
@@ -263,10 +263,10 @@ void sortAlgorithms::radixSort()
         if (stop)
             return;
 
-        int power = pow(10, i); 
+        int power = pow(10, i);
 
-        int *temp = new int[dataNum]; 
-        int count[10];               
+        int *temp = new int[dataNum];
+        int count[10];
         memset(count, 0, sizeof(count));
 
         // 按位大小统计个数
@@ -280,8 +280,8 @@ void sortAlgorithms::radixSort()
 
             pauseLock.lock();
             pauseLock.unlock();
-            cmpCnt++;                
-            emit compareColumn(j, j); 
+            cmpCnt++;
+            emit compareColumn(j, j);
             msleep(speed);
         }
 
@@ -304,7 +304,7 @@ void sortAlgorithms::radixSort()
             temp[count[num] - 1] = numbers[j];
             count[num]--;
 
-            cmpCnt++; 
+            cmpCnt++;
         }
 
         // 用位有序的辅助数组更新原数组
@@ -317,8 +317,8 @@ void sortAlgorithms::radixSort()
 
             pauseLock.lock();
             pauseLock.unlock();
-            oprtCnt++;                         
-            emit updtColumn(j, true, numbers); 
+            oprtCnt++;
+            emit updtColumn(j, true, numbers);
             msleep(speed);
         }
     }
@@ -328,13 +328,13 @@ void sortAlgorithms::radixSort()
 void sortAlgorithms::quickSort(int left, int right)
 {
     if (stop)
-        return; 
+        return;
     if (left >= right)
         return;
 
-    int i, j, base; 
+    int i, j, base;
     i = left, j = right;
-    base = numbers[left]; 
+    base = numbers[left];
     if (oneStep)
     {
         emit baseColumn(left);
@@ -345,7 +345,7 @@ void sortAlgorithms::quickSort(int left, int right)
     {
         if (stop)
             return;
-        pauseLock.lock(); 
+        pauseLock.lock();
         pauseLock.unlock();
 
         if (oneStep)
@@ -353,12 +353,12 @@ void sortAlgorithms::quickSort(int left, int right)
             emit baseColumn(left);
             msleep(speed);
             resumeSorting();
-        } 
+        }
 
-        while (numbers[j] >= base && i < j) 
+        while (numbers[j] >= base && i < j)
         {
             j--;
-            cmpCnt++; 
+            cmpCnt++;
             pauseLock.lock();
             pauseLock.unlock();
             if (oneStep)
@@ -398,7 +398,7 @@ void sortAlgorithms::quickSort(int left, int right)
 
             pauseLock.lock();
             pauseLock.unlock();
-            
+
             emit swapColumn(i, j, numbers);
             emit baseColumn(left);
             resumeSorting();
@@ -409,7 +409,7 @@ void sortAlgorithms::quickSort(int left, int right)
     numbers[left] = numbers[i];
     numbers[i] = base;
     oprtCnt++;
-    emit swapColumn(left, i, numbers); 
+    emit swapColumn(left, i, numbers);
     msleep(speed);
 
     quickSort(left, i - 1);
@@ -422,9 +422,9 @@ void sortAlgorithms::mergeSort(int left, int right)
     if (left < right)
     {
         int mid = (left + right) / 2;
-        mergeSort(left, mid);      
-        mergeSort(mid + 1, right); 
-        merge(left, mid, right);   
+        mergeSort(left, mid);
+        mergeSort(mid + 1, right);
+        merge(left, mid, right);
     }
 }
 
@@ -432,8 +432,8 @@ void sortAlgorithms::mergeSort(int left, int right)
 void sortAlgorithms::merge(int left, int mid, int right)
 {
 
-    int *temp = new int[right - left + 1]; 
-    int i = left, j = mid + 1, k = 0;      
+    int *temp = new int[right - left + 1];
+    int i = left, j = mid + 1, k = 0;
     while (i <= mid && j <= right)
     {
         if (stop)
@@ -449,7 +449,7 @@ void sortAlgorithms::merge(int left, int mid, int right)
 
         if (numbers[i] <= numbers[j])
         {
-            temp[k++] = numbers[i++]; 
+            temp[k++] = numbers[i++];
             oprtCnt++;
         }
         else
@@ -458,7 +458,7 @@ void sortAlgorithms::merge(int left, int mid, int right)
             oprtCnt++;
         }
     }
-    while (i <= mid) 
+    while (i <= mid)
     {
         if (stop)
             return;
@@ -467,13 +467,13 @@ void sortAlgorithms::merge(int left, int mid, int right)
         pauseLock.unlock();
         if (oneStep)
             emit baseColumn(mid);
-        emit compareColumn(i, j); 
+        emit compareColumn(i, j);
 
         msleep(speed);
 
         temp[k++] = numbers[i++];
     }
-    while (j <= right) 
+    while (j <= right)
     {
         if (stop)
             return;
@@ -482,14 +482,14 @@ void sortAlgorithms::merge(int left, int mid, int right)
         pauseLock.unlock();
         if (oneStep)
             emit baseColumn(mid);
-        emit compareColumn(i, j); 
+        emit compareColumn(i, j);
         msleep(speed);
 
         temp[k++] = numbers[j++];
     }
 
-    k = 0;                              
-    for (int i = left; i <= right; i++) 
+    k = 0;
+    for (int i = left; i <= right; i++)
     {
         if (stop)
             return;
@@ -504,20 +504,19 @@ void sortAlgorithms::merge(int left, int mid, int right)
         msleep(speed);
     }
 
-    delete[] temp; 
+    delete[] temp;
 }
 
 // 3 堆排序
 void sortAlgorithms::heapSort()
 {
-    
+
     for (int i = dataNum / 2 - 1; i >= 0; i--)
     {
         if (stop)
             return;
         max_heapify(i, dataNum - 1);
     }
-
 
     for (int i = dataNum - 1; i > 0; i--)
     {
@@ -531,24 +530,24 @@ void sortAlgorithms::heapSort()
         pauseLock.unlock();
         emit swapColumn(0, i, numbers);
         msleep(speed);
-        pauseLock.lock(); 
+        pauseLock.lock();
         pauseLock.unlock();
         max_heapify(0, i - 1);
     }
 }
 
 // 堆排序_构建大根堆
-void sortAlgorithms::max_heapify(int start, int end) 
+void sortAlgorithms::max_heapify(int start, int end)
 {
-    int fa = start;       
-    int son = fa * 2 + 1; 
+    int fa = start;
+    int son = fa * 2 + 1;
 
-    while (son <= end) 
+    while (son <= end)
     {
         if (stop)
             return;
 
-        if (son + 1 <= end && numbers[son] < numbers[son + 1]) 
+        if (son + 1 <= end && numbers[son] < numbers[son + 1])
         {
             pauseLock.lock();
             pauseLock.unlock();
@@ -556,7 +555,7 @@ void sortAlgorithms::max_heapify(int start, int end)
             emit compareColumn(son, son + 1);
             msleep(speed);
 
-            son++; 
+            son++;
         }
 
         pauseLock.lock();
@@ -565,7 +564,7 @@ void sortAlgorithms::max_heapify(int start, int end)
         emit compareColumn(son, fa);
         msleep(speed);
 
-        if (numbers[fa] > numbers[son]) 
+        if (numbers[fa] > numbers[son])
             return;
         else
         {
@@ -575,8 +574,8 @@ void sortAlgorithms::max_heapify(int start, int end)
             swap(fa, son);
             emit swapColumn(fa, son, numbers);
 
-            fa = son;          
-            son = son * 2 + 1; 
+            fa = son;
+            son = son * 2 + 1;
 
             oprtCnt++;
 
@@ -608,7 +607,7 @@ void sortAlgorithms::shellSort()
             emit compareColumn(i, i - gap);
             msleep(speed);
 
-            if (numbers[i] < numbers[i - gap]) 
+            if (numbers[i] < numbers[i - gap])
             {
 
                 int temp = numbers[i];
@@ -617,7 +616,7 @@ void sortAlgorithms::shellSort()
                     if (stop)
                         return;
 
-                    if (j != i - gap) 
+                    if (j != i - gap)
                     {
                         pauseLock.lock();
                         pauseLock.unlock();
@@ -625,15 +624,15 @@ void sortAlgorithms::shellSort()
                         emit compareColumn(i, j);
                         msleep(speed);
                     }
-                    numbers[j + gap] = numbers[j]; 
+                    numbers[j + gap] = numbers[j];
 
                     pauseLock.lock();
                     pauseLock.unlock();
                     oprtCnt++;
-                    emit compareColumn(j, j + gap); 
+                    emit compareColumn(j, j + gap);
                     pauseLock.lock();
                     pauseLock.unlock();
-                    emit updtColumn(j + gap, false, numbers); 
+                    emit updtColumn(j + gap, false, numbers);
                     msleep(speed);
                 }
                 numbers[j + gap] = temp;
@@ -641,7 +640,7 @@ void sortAlgorithms::shellSort()
                 oprtCnt++;
                 pauseLock.lock();
                 pauseLock.unlock();
-                emit compareColumn(i, j + gap); 
+                emit compareColumn(i, j + gap);
                 emit updtColumn(j + gap, true, numbers);
                 msleep(speed);
             }
@@ -681,11 +680,11 @@ void sortAlgorithms::insertSort()
 
             oprtCnt++;
             emit updtColumn(j + 1, true, numbers);
-            emit compareColumn(i, j); 
+            emit compareColumn(i, j);
             emit baseColumn(i);
             msleep(speed);
             if (oneStep)
-                resumeSorting(); 
+                resumeSorting();
 
             j--;
         }
@@ -716,7 +715,7 @@ void sortAlgorithms::bubbleSort()
                 pauseLock.lock();
                 pauseLock.unlock();
                 emit compareColumn(j, j + 1);
-                emit baseColumn(j); 
+                emit baseColumn(j);
                 msleep(speed);
             }
 
@@ -736,7 +735,7 @@ void sortAlgorithms::bubbleSort()
 // 7 选择排序
 void sortAlgorithms::selectSort()
 {
-    for (int i = 0; i < dataNum - 1; i++) 
+    for (int i = 0; i < dataNum - 1; i++)
     {
         if (stop)
             return;
@@ -753,30 +752,30 @@ void sortAlgorithms::selectSort()
             if (stop)
                 return;
 
-            if (!oneStep) 
+            if (!oneStep)
             {
                 pauseLock.lock();
                 pauseLock.unlock();
             }
 
-            cmpCnt++;                        
-            emit compareColumn(min_flag, j); 
-            emit baseColumn(min_flag);      
+            cmpCnt++;
+            emit compareColumn(min_flag, j);
+            emit baseColumn(min_flag);
             msleep(speed);
 
-            if (numbers[j] < min) 
+            if (numbers[j] < min)
             {
                 min = numbers[j];
                 min_flag = j;
 
-                pauseLock.lock(); 
+                pauseLock.lock();
                 pauseLock.unlock();
-                emit baseColumn(min_flag); 
+                emit baseColumn(min_flag);
                 msleep(speed);
             }
         }
 
-        swap(i, min_flag); 
+        swap(i, min_flag);
 
         oprtCnt++;
         pauseLock.lock();

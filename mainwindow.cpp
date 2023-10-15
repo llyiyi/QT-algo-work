@@ -501,8 +501,8 @@ void MainWindow::updateColumns(int a, int b, int *newHeights)
     prevUpdtA = a, prevUpdtB = b;
 
     // 更新统计并显示比较和交换次数
-    ui->label_oprtCnt->setNum(sortCtrl->getOprtCnt());
-    ui->label_cmpCnt->setNum(sortCtrl->getCmpCnt());
+    ui->label_oprtCnt->setNum((int)sortCtrl->getOprtCnt());
+    ui->label_cmpCnt->setNum((int)sortCtrl->getCmpCnt());
 
     // 单步执行暂停
     if (sortCtrl->isOneStep())
@@ -538,8 +538,8 @@ void MainWindow::updateOneColumn(int c, bool resetPrev, int *newHeights) // newH
     prevUpdtC.push_back(c);
 
     // 更新统计并显示比较和交换次数
-    ui->label_oprtCnt->setNum(sortCtrl->getOprtCnt());
-    ui->label_cmpCnt->setNum(sortCtrl->getCmpCnt());
+    ui->label_oprtCnt->setNum((int)sortCtrl->getOprtCnt());
+    ui->label_cmpCnt->setNum((int)sortCtrl->getCmpCnt());
 
     // 单步执行暂停
     if (sortCtrl->isOneStep())
@@ -581,7 +581,7 @@ void MainWindow::highLightColumns(int a, int b)
     prevCmpA = a, prevCmpB = b;
 
     // 更新显示比较次数
-    ui->label_cmpCnt->setNum(sortCtrl->getCmpCnt());
+    ui->label_cmpCnt->setNum((int)sortCtrl->getCmpCnt());
 
     // 单步执行暂停
     if (sortCtrl->isOneStep())
