@@ -1,3 +1,5 @@
+#pragma GCC optimize(3,"Ofast","inline")
+
 #include "bestsort.h"
 #include <algorithm>
 #include <cmath>

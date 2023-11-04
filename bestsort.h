@@ -1,6 +1,6 @@
 #ifndef BESTSORT_H
 #define BESTSORT_H
-
+#pragma GCC optimize(3,"Ofast","inline")
 #include <vector>
 #include <type_traits>
 
