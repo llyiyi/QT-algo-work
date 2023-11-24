@@ -85,7 +85,6 @@ void statistics::on_pushButton_2_clicked()
     // 计时
     QTime t;
     t.start();
-
     intsort->sort(numint);
     QMessageBox::information(this, tr("排序完成"), tr("排序完成！选择保存文件。"));
     fileName = QFileDialog::getSaveFileName(this, tr("保存文件"), "", tr("Text Files (*.txt)"));
