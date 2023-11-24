@@ -6,7 +6,7 @@ statistics::statistics(QWidget *parent) : QMainWindow(parent),
                                           ui(new Ui::statistics)
 {
     ui->setupUi(this);
-    this->setWindowTitle(QString("最强排序"));
+    this->setWindowTitle(QString("统计信息"));
     this->setWindowIcon(QIcon(":/icon.ico"));
 
     int fontId = QFontDatabase::addApplicationFont(QStringLiteral(":/font/hgy3.ttf"));
@@ -30,6 +30,7 @@ statistics::statistics(QWidget *parent) : QMainWindow(parent),
     }
     styleFile.close();
 
+    sortCtrl = new sortalgotime();
     this->setWindowIcon(QIcon(":/icon.ico"));
 }
 
@@ -86,18 +87,6 @@ void statistics::on_pushButton_2_clicked()
     t.start();
     intsort->sort(numint);
     sorttimes[8] = t.elapsed(); // 最强排序耗时
-    sortCtrl = new sortalgotime();
-    for (int i = 0; i < 8; i++)
-    {
-        algorithmSelected = i;
-        sortCtrl->setSortingState(true);
-        sortCtrl->setAttribute(dataNum, numbers, algorithmSelected);
-        sortCtrl->start();
-        QTime t0;
-        t0.start();
-        sortCtrl->wait();
-        sorttimes[i] = t0.elapsed();
-    }
     QMessageBox::information(this, tr("排序完成"), tr("排序完成！选择保存文件。"));
     fileName = QFileDialog::getSaveFileName(this, tr("保存文件"), "", tr("Text Files (*.txt)"));
     QFile file(fileName);
@@ -111,4 +100,15 @@ void statistics::on_pushButton_2_clicked()
         out << numint[i] << endl;
     file.close();
     ui->label->setText(tr("文件保存状态：已保存文件到 %1").arg(fileName));
+    for (int i = 0; i < 8; i++)
+    {
+        algorithmSelected = i;
+        sortCtrl->setSortingState(true);
+        sortCtrl->setAttribute(dataNum, numbers, algorithmSelected);
+        sortCtrl->start();
+        QTime t0;
+        t0.start();
+        sortCtrl->wait();
+        sorttimes[i] = t0.elapsed();
+    }
 }
