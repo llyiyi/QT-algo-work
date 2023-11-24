@@ -52,6 +52,7 @@ private slots:
     void menuAct_actSelectSort();
     void menuAct_newWindow();
     void menuAct_bestwin();
+    void menuAct_statistics();
 
     // 其他
     void setSpeed(int speed);
@@ -98,6 +99,7 @@ private:
     QAction *actSelectSort;
     QAction *actSortWindow;
     QAction *actBestSort;
+    QAction *actStatistics;
 
     // 变量
     bool sorted = 0;

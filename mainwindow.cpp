@@ -2,6 +2,7 @@
 #include "ui_mainwindow.h"
 #include "sortwindow.h"
 #include "bestsortwin.h"
+#include "statistics.h"
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent), ui(new Ui::MainWindow)
@@ -142,6 +143,7 @@ void MainWindow::initMenuBar()
 
     actSortWindow = new QAction("其他排序", this);
     actBestSort = new QAction("最强排序", this);
+    actStatistics = new QAction("统计信息", this);
 
     // 添加动作
     menu_algorithm->addAction(actRadixSort);
@@ -154,6 +156,7 @@ void MainWindow::initMenuBar()
     menu_algorithm->addAction(actSelectSort);
     menu_windows->addAction(actSortWindow);
     menu_windows->addAction(actBestSort);
+    menu_windows->addAction(actStatistics);
 
     // 连接动作
     connect(actRadixSort, SIGNAL(triggered()), this, SLOT(menuAct_actRadixSort()));
@@ -166,6 +169,7 @@ void MainWindow::initMenuBar()
     connect(actSelectSort, SIGNAL(triggered()), this, SLOT(menuAct_actSelectSort()));
     connect(actSortWindow, SIGNAL(triggered()), this, SLOT(menuAct_newWindow()));
     connect(actBestSort, SIGNAL(triggered()), this, SLOT(menuAct_bestwin()));
+    connect(actStatistics, SIGNAL(triggered()), this, SLOT(menuAct_statistics()));
 }
 
 MainWindow::~MainWindow()
@@ -448,6 +452,13 @@ void MainWindow::menuAct_bestwin()
 {
     // 打开新窗体
     bestSortWin *w = new bestSortWin();
+    w->show();
+}
+
+void MainWindow::menuAct_statistics()
+{
+    // 打开新窗体
+    statistics *w = new statistics();
     w->show();
 }
 
