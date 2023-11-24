@@ -1,4 +1,5 @@
 QT       += core gui
+QT       += charts
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -26,7 +27,8 @@ SOURCES += \
     mainwindow.cpp \
     sortAlgorithms.cpp \
     sortalgotime.cpp \
-    sortwindow.cpp
+    sortwindow.cpp \
+    statistics.cpp
 
 HEADERS += \
     bestsort.h \
@@ -35,12 +37,14 @@ HEADERS += \
     mainwindow.h \
     sortAlgorithms.h \
     sortalgotime.h \
-    sortwindow.h
+    sortwindow.h \
+    statistics.h
 
 FORMS += \
     bestsortwin.ui \
     mainwindow.ui \
-    sortwindow.ui
+    sortwindow.ui \
+    statistics.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
