@@ -12,8 +12,9 @@
 #include "sortalgotime.h"
 #include "bestsort.h"
 
-namespace Ui {
-class statistics;
+namespace Ui
+{
+    class statistics;
 }
 
 class statistics : public QMainWindow
@@ -26,8 +27,8 @@ public:
 
 private slots:
     void on_pushButton_clicked();
-
     void on_pushButton_2_clicked();
+    void outputChart();
 
 private:
     Ui::statistics *ui;

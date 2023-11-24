@@ -1,6 +1,13 @@
 #include "statistics.h"
 #include "ui_statistics.h"
 #include "sortAlgorithms.h"
+#include <QtCharts/QChartView>
+#include <QtCharts/QBarSeries>
+#include <QtCharts/QBarSet>
+#include <QtCharts/QLegend>
+#include <QtCharts/QBarCategoryAxis>
+#include <QtCharts/QValueAxis>
+using namespace QtCharts;
 
 statistics::statistics(QWidget *parent) : QMainWindow(parent),
                                           ui(new Ui::statistics)
@@ -74,6 +81,61 @@ void statistics::on_pushButton_clicked()
     sorted = false;
 }
 
+// 输出到chart
+void statistics::outputChart()
+{
+    QBarSet *set0 = new QBarSet("耗费时间");
+
+    // *set0 << sorttimes[0] << sorttimes[1] << sorttimes[2] << sorttimes[3] << sorttimes[4] << sorttimes[5] << sorttimes[6] << sorttimes[7] << sorttimes[8] << sorttimes[9];
+    for (int i = 0; i < 9; i++)
+        *set0 << sorttimes[i];
+
+    QBarSeries *series = new QBarSeries();
+
+    series->setLabelsPosition(QAbstractBarSeries::LabelsOutsideEnd);
+    series->setLabelsVisible(true);
+    series->append(set0);
+
+    QChart *chart = new QChart();
+    chart->addSeries(series);
+    chart->setTitle("排序耗时统计");
+    chart->setAnimationOptions(QChart::SeriesAnimations);
+    // 背景颜色
+    chart->setBackgroundBrush(QBrush(QColor(0, 0, 0)));
+
+    QStringList categories;
+    categories << "基数排序"
+               << "快速排序"
+               << "归并排序"
+               << "堆排序"
+               << "希尔排序"
+               << "插入排序"
+               << "冒泡排序"
+               << "选择排序"
+               << "最强排序";
+    QBarCategoryAxis *axisX = new QBarCategoryAxis();
+    axisX->append(categories);
+    chart->addAxis(axisX, Qt::AlignBottom);
+    series->attachAxis(axisX);
+
+    QValueAxis *axisY = new QValueAxis();
+    axisY->setRange(-1, std::max(sorttimes[0], std::max(sorttimes[1], std::max(sorttimes[2], std::max(sorttimes[3], std::max(sorttimes[4], std::max(sorttimes[5], std::max(sorttimes[6], std::max(sorttimes[7], std::max(sorttimes[8], sorttimes[9]))))))))));
+    chart->addAxis(axisY, Qt::AlignLeft);
+    series->attachAxis(axisY);
+
+    chart->legend()->setVisible(true);
+    chart->legend()->setAlignment(Qt::AlignBottom);
+
+    QChartView *chartView = new QChartView(chart);
+    chartView->setRenderHint(QPainter::Antialiasing);
+    chartView->setParent(ui->widget);
+    chartView->resize(ui->widget->size());
+    chartView->show();
+
+    // 弹出信息框
+    QMessageBox::information(this, tr("统计信息"), tr("排序耗时统计已输出至图表！"));
+}
+
 // 排序按钮
 void statistics::on_pushButton_2_clicked()
 {
@@ -87,28 +149,29 @@ void statistics::on_pushButton_2_clicked()
     t.start();
     intsort->sort(numint);
     sorttimes[8] = t.elapsed(); // 最强排序耗时
-    QMessageBox::information(this, tr("排序完成"), tr("排序完成！选择保存文件。"));
-    fileName = QFileDialog::getSaveFileName(this, tr("保存文件"), "", tr("Text Files (*.txt)"));
-    QFile file(fileName);
-    if (!file.open(QIODevice::WriteOnly | QIODevice::Text))
-    {
-        QMessageBox::warning(this, tr("写入文件失败"), tr("无法保存文件：\n%1").arg(fileName));
-        return;
-    }
-    QTextStream out(&file);
-    for (int i = 0; i < dataNum; i++)
-        out << numint[i] << endl;
-    file.close();
-    ui->label->setText(tr("文件保存状态：已保存文件到 %1").arg(fileName));
+    sortCtrl = new sortalgotime();
     for (int i = 0; i < 8; i++)
     {
-        algorithmSelected = i;
-        sortCtrl->setSortingState(true);
-        sortCtrl->setAttribute(dataNum, numbers, algorithmSelected);
-        sortCtrl->start();
-        QTime t0;
-        t0.start();
-        sortCtrl->wait();
-        sorttimes[i] = t0.elapsed();
+        try
+        {
+            int *temp = new int[dataNum + 1];
+            memcpy(temp, numbers, sizeof(int) * (dataNum + 1));
+            algorithmSelected = i;
+            sortCtrl->setSortingState(true);
+            sortCtrl->setAttribute(dataNum, temp, algorithmSelected);
+            QTime t0;
+            t0.start();
+            sortCtrl->start();
+            sortCtrl->wait();
+            sorttimes[i] = t0.elapsed();
+        }
+        catch (std::exception &e)
+        {
+            // 置零
+            sorttimes[i] = -1;
+            continue;
+        }
     }
+    // 输出到chart
+    statistics::outputChart();
 }
