@@ -1,9 +1,9 @@
 #include "statistics.h"
 #include "ui_statistics.h"
+#include "sortAlgorithms.h"
 
-statistics::statistics(QWidget *parent) :
-    QMainWindow(parent),
-    ui(new Ui::statistics)
+statistics::statistics(QWidget *parent) : QMainWindow(parent),
+                                          ui(new Ui::statistics)
 {
     ui->setupUi(this);
     this->setWindowTitle(QString("最强排序"));
@@ -30,10 +30,8 @@ statistics::statistics(QWidget *parent) :
     }
     styleFile.close();
 
-
     this->setWindowIcon(QIcon(":/icon.ico"));
 }
-
 
 statistics::~statistics()
 {
@@ -68,7 +66,8 @@ void statistics::on_pushButton_clicked()
         numbers[i] = temp[i];
     file.close();
     numint.clear();
-    for (int i = 0; i < dataNum; i++) {
+    for (int i = 0; i < dataNum; i++)
+    {
         numint.push_back(numbers[i]);
     }
     sorted = false;
@@ -86,16 +85,18 @@ void statistics::on_pushButton_2_clicked()
     QTime t;
     t.start();
     intsort->sort(numint);
-    sorttimes[8]=t.elapsed();
-    for(int i =0;i<8;i++){
-        algorithmSelected=i;
+    sorttimes[8] = t.elapsed(); // 最强排序耗时
+    sortCtrl = new sortalgotime();
+    for (int i = 0; i < 8; i++)
+    {
+        algorithmSelected = i;
         sortCtrl->setSortingState(true);
         sortCtrl->setAttribute(dataNum, numbers, algorithmSelected);
         sortCtrl->start();
         QTime t0;
         t0.start();
         sortCtrl->wait();
-        sorttimes[i]=t0.elapsed();
+        sorttimes[i] = t0.elapsed();
     }
     QMessageBox::information(this, tr("排序完成"), tr("排序完成！选择保存文件。"));
     fileName = QFileDialog::getSaveFileName(this, tr("保存文件"), "", tr("Text Files (*.txt)"));

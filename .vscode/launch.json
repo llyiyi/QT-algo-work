@@ -8,8 +8,8 @@
       "args": [],
       "stopAtEntry": false,
       "externalConsole": true,
-      "cwd": "c:/Users/xiong/Desktop/Sorting_Visulization_cqz",
-      "program": "c:/Users/xiong/Desktop/Sorting_Visulization_cqz/build/Debug/outDebug",
+      "cwd": "c:/Users/xiong/Desktop/QT-algo-work",
+      "program": "c:/Users/xiong/Desktop/QT-algo-work/build/Debug/outDebug",
       "MIMode": "gdb",
       "miDebuggerPath": "gdb",
       "setupCommands": [
