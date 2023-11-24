@@ -88,8 +88,9 @@ void statistics::outputChart()
 
     // *set0 << sorttimes[0] << sorttimes[1] << sorttimes[2] << sorttimes[3] << sorttimes[4] << sorttimes[5] << sorttimes[6] << sorttimes[7] << sorttimes[8] << sorttimes[9];
     for (int i = 0; i < 9; i++)
-        *set0 << sorttimes[i];
-
+    {
+        *set0 << sorttimes[i] / 1000000.0;
+    }
     QBarSeries *series = new QBarSeries();
 
     series->setLabelsPosition(QAbstractBarSeries::LabelsOutsideEnd);
@@ -100,8 +101,8 @@ void statistics::outputChart()
     chart->addSeries(series);
     chart->setTitle("排序耗时统计");
     chart->setAnimationOptions(QChart::SeriesAnimations);
-    // 背景颜色
-    chart->setBackgroundBrush(QBrush(QColor(0, 0, 0)));
+
+    chart->setTheme(QChart::ChartThemeBlueCerulean);
 
     QStringList categories;
     categories << "基数排序"
@@ -119,7 +120,7 @@ void statistics::outputChart()
     series->attachAxis(axisX);
 
     QValueAxis *axisY = new QValueAxis();
-    axisY->setRange(-1, std::max(sorttimes[0], std::max(sorttimes[1], std::max(sorttimes[2], std::max(sorttimes[3], std::max(sorttimes[4], std::max(sorttimes[5], std::max(sorttimes[6], std::max(sorttimes[7], std::max(sorttimes[8], sorttimes[9]))))))))));
+    axisY->setRange(-1, std::max(sorttimes[0], std::max(sorttimes[1], std::max(sorttimes[2], std::max(sorttimes[3], std::max(sorttimes[4], std::max(sorttimes[5], std::max(sorttimes[6], std::max(sorttimes[7], sorttimes[8])))))))) / 1000000 + 1);
     chart->addAxis(axisY, Qt::AlignLeft);
     series->attachAxis(axisY);
 
@@ -145,10 +146,10 @@ void statistics::on_pushButton_2_clicked()
         return;
     }
     // 计时
-    QTime t;
+    QElapsedTimer t;
     t.start();
     intsort->sort(numint);
-    sorttimes[8] = t.elapsed(); // 最强排序耗时
+    sorttimes[8] = t.nsecsElapsed(); // 最强排序耗时
     sortCtrl = new sortalgotime();
     for (int i = 0; i < 8; i++)
     {
@@ -159,11 +160,11 @@ void statistics::on_pushButton_2_clicked()
             algorithmSelected = i;
             sortCtrl->setSortingState(true);
             sortCtrl->setAttribute(dataNum, temp, algorithmSelected);
-            QTime t0;
+            QElapsedTimer t0;
             t0.start();
             sortCtrl->start();
             sortCtrl->wait();
-            sorttimes[i] = t0.elapsed();
+            sorttimes[i] = t0.nsecsElapsed();
         }
         catch (std::exception &e)
         {

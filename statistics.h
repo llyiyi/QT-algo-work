@@ -35,7 +35,7 @@ private:
     QString fileName = "";
     int algorithmSelected = 0;
     int dataNum = 0;
-    int sorttimes[10];
+    qint64 sorttimes[10];
     int *numbers;
     bool sorted = false;
     std::vector<int> numint;
