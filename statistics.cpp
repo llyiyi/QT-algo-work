@@ -87,19 +87,6 @@ void statistics::on_pushButton_2_clicked()
     t.start();
     intsort->sort(numint);
     sorttimes[8]=t.elapsed();
-    QMessageBox::information(this, tr("排序完成"), tr("排序完成！选择保存文件。"));
-    fileName = QFileDialog::getSaveFileName(this, tr("保存文件"), "", tr("Text Files (*.txt)"));
-    QFile file(fileName);
-    if (!file.open(QIODevice::WriteOnly | QIODevice::Text))
-    {
-        QMessageBox::warning(this, tr("写入文件失败"), tr("无法保存文件：\n%1").arg(fileName));
-        return;
-    }
-    QTextStream out(&file);
-    for (int i = 0; i < dataNum; i++)
-    out << numbers[i] << endl;
-    file.close();
-    ui->label->setText(tr("文件保存状态：已保存文件到 %1").arg(fileName));
     for(int i =0;i<8;i++){
         algorithmSelected=i;
         sortCtrl->setSortingState(true);
@@ -110,4 +97,17 @@ void statistics::on_pushButton_2_clicked()
         sortCtrl->wait();
         sorttimes[i]=t0.elapsed();
     }
+    QMessageBox::information(this, tr("排序完成"), tr("排序完成！选择保存文件。"));
+    fileName = QFileDialog::getSaveFileName(this, tr("保存文件"), "", tr("Text Files (*.txt)"));
+    QFile file(fileName);
+    if (!file.open(QIODevice::WriteOnly | QIODevice::Text))
+    {
+        QMessageBox::warning(this, tr("写入文件失败"), tr("无法保存文件：\n%1").arg(fileName));
+        return;
+    }
+    QTextStream out(&file);
+    for (int i = 0; i < dataNum; i++)
+        out << numint[i] << endl;
+    file.close();
+    ui->label->setText(tr("文件保存状态：已保存文件到 %1").arg(fileName));
 }
