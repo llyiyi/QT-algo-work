@@ -2,7 +2,7 @@
 .history/
 .vscode/
 .vs/
-..VSCodeCounter/
+.VSCodeCounter/
 
 # C++ objects and libs
 *.slo

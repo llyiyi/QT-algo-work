@@ -1,6 +1,7 @@
-# SDL2-Cpp-Game
+# QT-algo-work
 
-使用 SDL2 图形库开发的基于 C/C++语言的游戏
+本项目基于https://github.com/bbdzs/Sorting-Visualization-bbdzs。
+一款基于QT-C++的可视化排序软件，实现了常用排序算法的可视化展示、时间统计、算法效率比较，并设计了“最快”的排序算法以及资源有限状态的外部排序算法。
 
 <!-- PROJECT SHIELDS -->
 
@@ -31,69 +32,42 @@
 
 ###### 开发前的配置要求
 
-1. xxxxx x.x.x
-2. xxxxx x.x.x
+1. Qt 5.15.2及适用版本的Qt-Creator。
+2. Qt 5.15.2 MinGW 32-bit的Kit包
 
 ###### **安装步骤**
 
-1. Get a free API Key at [https://example.com](https://example.com)
+1. 安装Qt 5.15.2及适用版本的Qt-Creator社区版。
 2. Clone the repo
+3. 用Qt-Creator打开项目，选择.pro文件
+4. 配置构建编译器，选择Qt 5.15.2 MinGW 32-bit
 
 ```sh
-git clone https://github.com/llyiyi/SDL2-Cpp-Game.git
+git clone https://github.com/llyiyi/QT-algo-work.git
 ```
 
 ### 文件目录说明
 
-eg:
+```bash
+QT-algo-work
+├─data                    #存放排序数据示例
+├─font                    #存放界面字体
+├─img                     #存放演示图片
+├─new_data                #存放大排序数据集
+├─outputdata              #存放外部排序结果
+└─rc                      #存放图标资源
 
 ```
-filetree
-├── ARCHITECTURE.md
-├── LICENSE.txt
-├── README.md
-├── /account/
-├── /bbs/
-├── /docs/
-│  ├── /rules/
-│  │  ├── backend.txt
-│  │  └── frontend.txt
-├── manage.py
-├── /oa/
-├── /static/
-├── /templates/
-├── useless.md
-└── /util/
-
-```
-
-### 开发的架构
-
-请阅读[ARCHITECTURE.md](https://github.com/llyiyi/SDL2-Cpp-Game/blob/master/ARCHITECTURE.md) 查阅为该项目的架构。
 
 ### 部署
 
-暂无
+##### 直接使用（推荐）
 
-### 使用到的框架
+下载最新的Releases版本，解压后点击exe运行即可。
 
-- [xxxxxxx](https://getbootstrap.com)
-- [xxxxxxx](https://jquery.com)
-- [xxxxxxx](https://laravel.com)
+##### 本地编译生成
 
-### 贡献者
-
-请阅读**CONTRIBUTING.md** 查阅为该项目做出贡献的开发者。
-
-#### 如何参与开源项目
-
-贡献使开源社区成为一个学习、激励和创造的绝佳场所。你所作的任何贡献都是**非常感谢**的。
-
-1. Fork the Project
-2. Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your Changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the Branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
+利用Qt-Creator生成后运行。
 
 ### 版本控制
 
@@ -101,33 +75,33 @@ filetree
 
 ### 作者
 
-llyiyi@llyiyi@mail.nwpu.edu.cn
+原作者：bbdzs@https://github.com/bbdzs
 
-_您也可以在贡献者名单中参看所有参与该项目的开发者。_
+此版本作者：
+llyiyi@https://github.com/llyiyi
+Xiong@https://github.com/xiongsp
+harmor@https://github.com/harmor123
+
+_您可以在贡献者名单中参看所有参与该项目的开发者。_
 
 ### 版权说明
 
-该项目签署了 GNU GPLv3 授权许可，详情请参阅 [LICENSE](https://github.com/llyiyi/SDL2-Cpp-Game/blob/master/LICENSE)
+该项目签署了 GNU GPLv3 授权许可，详情请参阅 [LICENSE](https://github.com/llyiyi/QT-algo-work/blob/main/LICENSE)
 
 ### 鸣谢
 
-- [GitHub Emoji Cheat Sheet](https://www.webpagefx.com/tools/emoji-cheat-sheet)
-- [Img Shields](https://shields.io)
-- [Choose an Open Source License](https://choosealicense.com)
-- [GitHub Pages](https://pages.github.com)
-- [Animate.css](https://daneden.github.io/animate.css)
-- [xxxxxxxxxxxxxx](https://connoratherton.com/loaders)
+- [Sorting-Visualization-bbdzs](https://github.com/bbdzs/Sorting-Visualization-bbdzs)
 
 <!-- links -->
 
-[your-project-path]: llyiyi/SDL2-Cpp-Game
-[contributors-shield]: https://img.shields.io/github/contributors/llyiyi/SDL2-Cpp-Game.svg?style=flat-square
-[contributors-url]: https://github.com/llyiyi/SDL2-Cpp-Game/graphs/contributors
-[forks-shield]: https://img.shields.io/github/forks/llyiyi/SDL2-Cpp-Game.svg?style=flat-square
-[forks-url]: https://github.com/llyiyi/SDL2-Cpp-Game/network/members
-[stars-shield]: https://img.shields.io/github/stars/llyiyi/SDL2-Cpp-Game.svg?style=flat-square
-[stars-url]: https://github.com/llyiyi/SDL2-Cpp-Game/stargazers
-[issues-shield]: https://img.shields.io/github/issues/llyiyi/SDL2-Cpp-Game.svg?style=flat-square
-[issues-url]: https://img.shields.io/github/issues/llyiyi/SDL2-Cpp-Game.svg
-[license-shield]: https://img.shields.io/github/license/llyiyi/SDL2-Cpp-Game.svg?style=flat-square
-[license-url]: https://github.com/llyiyi/SDL2-Cpp-Game/blob/master/LICENSE
+[your-project-path]: llyiyi/QT-algo-work
+[contributors-shield]: https://img.shields.io/github/contributors/llyiyi/QT-algo-work.svg?style=flat-square
+[contributors-url]: https://github.com/llyiyi/QT-algo-work/graphs/contributors
+[forks-shield]: https://img.shields.io/github/forks/llyiyi/QT-algo-work.svg?style=flat-square
+[forks-url]: https://github.com/llyiyi/QT-algo-work/network/members
+[stars-shield]: https://img.shields.io/github/stars/llyiyi/QT-algo-work.svg?style=flat-square
+[stars-url]: https://github.com/llyiyi/QT-algo-work/stargazers
+[issues-shield]: https://img.shields.io/github/issues/llyiyi/QT-algo-work.svg?style=flat-square
+[issues-url]: https://img.shields.io/github/issues/llyiyi/QT-algo-work.svg
+[license-shield]: https://img.shields.io/github/license/llyiyi/QT-algo-work.svg?style=flat-square
+[license-url]: https://github.com/llyiyi/QT-algo-work/blob/main/LICENSE
