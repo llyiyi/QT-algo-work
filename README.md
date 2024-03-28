@@ -1,6 +1,7 @@
 # QT-algo-work
 
 本项目基于https://github.com/bbdzs/Sorting-Visualization-bbdzs。
+
 一款基于QT-C++的可视化排序软件，实现了常用排序算法的可视化展示、时间统计、算法效率比较，并设计了“最快”的排序算法以及资源有限状态的外部排序算法。
 
 <!-- PROJECT SHIELDS -->
@@ -78,8 +79,11 @@ QT-algo-work
 原作者：bbdzs@https://github.com/bbdzs
 
 此版本作者：
+
 llyiyi@https://github.com/llyiyi
+
 Xiong@https://github.com/xiongsp
+
 harmor@https://github.com/harmor123
 
 _您可以在贡献者名单中参看所有参与该项目的开发者。_
