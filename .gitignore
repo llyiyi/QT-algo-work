@@ -1,3 +1,9 @@
+# personal files
+.history/
+.vscode/
+.vs/
+..VSCodeCounter/
+
 # C++ objects and libs
 *.slo
 *.lo
